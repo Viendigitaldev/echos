@@ -15,12 +15,6 @@
   left: -9999px;
 }
 
-.error-page-image {
-  max-width: 420px;
-  width: 100%;
-  height: auto;
-}
-
 /* Contact form validation feedback — success no longer renders here (it
    redirects to /thank-you), but the same component still handles errors. */
 .contact-flash {
@@ -267,4 +261,13 @@
      a flex row (d-flex align-items-center in the markup), so the h3 stays
      vertically centered within the reserved space either way. */
   min-height: 92px;
+}
+
+/* 404 page's CTA section: main.css's .section-padding (100px top/bottom) is
+   sized for sections full of content — here it only wraps one button, so
+   the same padding reads as a large dead gap above and below it. Scoped to
+   this one section (not a change to .section-padding itself, which other,
+   content-heavy pages still rely on). */
+.error-page-cta {
+  padding: 20px 0 60px;
 }
