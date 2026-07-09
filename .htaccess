@@ -1,0 +1,15 @@
+# Defense in depth: if this project is ever deployed with a vhost pointing
+# straight at the project root instead of /public, never serve dotfiles
+# (.env in particular) as static text.
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+RewriteEngine On
+
+# This project has no dedicated Apache vhost on MAMP (DocumentRoot is the
+# shared htdocs/ folder), so every request under /echos-dev/ is transparently
+# forwarded to the real webroot at /echos-dev/public/. On a real vhost whose
+# DocumentRoot points straight at /public, this file is not needed at all.
+RewriteCond %{REQUEST_URI} !^/echos-dev/public/
+RewriteRule ^(.*)$ public/$1 [L]

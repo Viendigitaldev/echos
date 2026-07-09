@@ -1,0 +1,270 @@
+/*
+ * Site-specific additions on top of the vendor theme (main.css). Kept
+ * separate so future theme/template updates don't clobber our own rules.
+ */
+
+.filter-invert {
+  filter: invert(1);
+}
+
+/* Contact form honeypot: kept in the DOM and tab-order-excluded, but moved
+   off-screen instead of display:none so spam bots that skip hidden fields
+   still fill it in. */
+.visually-hidden-field {
+  position: absolute;
+  left: -9999px;
+}
+
+.error-page-image {
+  max-width: 420px;
+  width: 100%;
+  height: auto;
+}
+
+/* Contact form validation feedback — success no longer renders here (it
+   redirects to /thank-you), but the same component still handles errors. */
+.contact-flash {
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.contact-flash-error {
+  background: rgba(255, 92, 92, 0.1);
+  color: #ff5c5c;
+  border: 1px solid rgba(255, 92, 92, 0.3);
+}
+.contact-flash-success {
+  background: rgba(61, 220, 132, 0.1);
+  color: #3ddc84;
+  border: 1px solid rgba(61, 220, 132, 0.3);
+}
+
+/* Blog listing filter bar: search + category tabs + sort.
+   Grid (not flex space-between) so the middle column is always true-centered
+   regardless of how the search/sort columns differ in width. */
+.blog-filter-bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+@media (max-width: 991px) {
+  .blog-filter-bar {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
+.blog-search-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  min-width: 240px;
+  justify-self: start;
+}
+.blog-search-form i {
+  color: var(--text);
+  font-size: 14px;
+}
+.blog-search-form input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--white);
+  font-size: 14px;
+  width: 100%;
+}
+.blog-search-form input::placeholder {
+  color: var(--text);
+}
+
+.blog-category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-self: center;
+}
+.blog-tab {
+  padding: 10px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #111;
+  color: var(--white);
+  border-radius: 50px;
+  font-size: 13px;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.blog-tab:hover,
+.blog-tab.active {
+  /* Matches .tab-btn.active on the Applications page — not var(--theme),
+     which is a darker/more muted green used elsewhere in the vendor theme. */
+  background: #9bc27a;
+  color: #000;
+  border-color: #9bc27a;
+}
+
+.blog-sort-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: end;
+}
+.blog-sort-form i {
+  color: #9bc27a;
+}
+.blog-sort-select {
+  appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--white);
+  font-size: 14px;
+  cursor: pointer;
+  padding-right: 18px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23b1b1b1' stroke-width='1.5' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+.blog-sort-select option {
+  background: #111;
+  color: var(--white);
+}
+
+.blog-empty-state {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--text);
+}
+
+/* Blog listing card meta row: main.css's ".news-box-items-2 .content ul" is
+   a plain flex row with a 20px gap, so the date sat right next to the
+   category pill and read as part of it. Push it to the far right instead
+   (".news-box-items-2" is only used on this page, so safe to scope here). */
+.news-box-items-2 .content ul li.blog-card-date {
+  margin-left: auto;
+}
+.news-box-items-2 .content ul li.blog-card-date i {
+  color: var(--theme);
+  margin-right: 4px;
+}
+
+/* Blog detail page meta row (author/date/category, in the breadcrumb).
+   The vendor's own scoped rule for .post-list
+   (.news-details-area .blog-post-details .single-blog-post .post-content
+   .post-list, main.css) doesn't apply here since this list lives in the
+   breadcrumb, not inside .post-content. */
+.post-list li {
+  font-weight: 500;
+  font-size: 14px;
+}
+.post-list li i {
+  color: var(--theme);
+  margin-right: 5px;
+}
+
+/* Post body copy: main.css already sets font-size/color via
+   ".post-content p, .service-content a" (main.css) — add justify + vertical
+   rhythm. main.css's global reset zeroes every heading's and paragraph's
+   margin, then only re-adds a bottom margin for h2 inside .post-content —
+   h3/h4 and paragraph-to-paragraph spacing were left at 0, so headings/text
+   ran together anywhere the body used an h3 (the admin body field is raw
+   HTML, and h3 is the most common subheading level). */
+.post-content p {
+  text-align: justify;
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+.post-content > *:first-child {
+  margin-top: 0;
+}
+.post-content > *:last-child {
+  margin-bottom: 0;
+}
+
+/* main.css resets every <ul> to list-style:none with zero padding/margin
+   (used for its own custom-styled nav/pill lists elsewhere) — .post-content
+   never opted back in, so bulleted lists in a post/legal-page body rendered
+   as plain stacked lines with no marker, indent, or spacing. */
+.post-content ul {
+  list-style: disc;
+  padding-left: 20px;
+  margin-bottom: 24px;
+}
+.post-content ul li {
+  margin-bottom: 10px;
+  text-align: justify;
+  font-weight: 400;
+  font-size: 18px;
+}
+.post-content ul li::marker {
+  color: var(--theme);
+}
+
+/* App details modal (.app-modal-*): main.css defines this block twice (once
+   for the homepage slider cards, once added later for the Applications
+   grid), and the two disagree on .app-modal-content's vertical anchor
+   (top: 43% wins the cascade) with no height cap on the box at all. For a
+   longer description, the box's own height pushes its top edge (and the
+   close button, which sits near it) above the viewport, and
+   .app-modal-content's overflow:hidden means there's nothing to scroll to
+   reach it. Recentering at 50% and letting only the body text scroll
+   internally (image + close button stay fixed in place) fixes this without
+   touching the sizes/colors/copy main.css already set. */
+.app-modal-content {
+  top: 50%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+.app-modal-content img {
+  flex-shrink: 0;
+}
+.app-modal-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Homepage "Thinking Systems at Work" slider: .service-box-items-3's base
+   rules in main.css come from an unrelated, more complex card variant that
+   never included an <img> at all, so the card has no height of its own —
+   its img rule (height: 100%) can't resolve against that indeterminate
+   parent height, and each card's rendered height silently followed its own
+   image's natural aspect ratio instead. The original theme's 3 seed images
+   all happened to share the same 3024x1616 ratio, which hid the bug; real
+   application screenshots (different ratios) expose it as uneven card
+   sizes and the last card overflowing its row. A fixed aspect ratio
+   (matching those original images) + the existing object-fit: cover keeps
+   every card uniform regardless of the source image's own proportions. */
+.service-box-items-3 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.service-box-items-3 img {
+  height: auto;
+  aspect-ratio: 3024 / 1616;
+}
+.service-box-items-3 .card-btn {
+  margin-top: auto;
+  /* Reserve space for 2 lines of title (h3 is 24px/normal line-height, one
+     line measures ~36px) so a short one-line title and a long two-line
+     title still produce the same total card height — .card-btn is already
+     a flex row (d-flex align-items-center in the markup), so the h3 stays
+     vertically centered within the reserved space either way. */
+  min-height: 92px;
+}
