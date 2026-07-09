@@ -24,7 +24,7 @@
                         </div>
                     </div>
 
-                    <section class="section-padding">
+                    <section class="section-padding error-page-cta">
                         <div class="container text-center">
                             <div class="hero-button wow fadeInUp">
                                 <a href="<?= e(url('/')) ?>" class="start-building-btn">
