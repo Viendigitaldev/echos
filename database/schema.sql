@@ -182,3 +182,20 @@ CREATE TABLE settings (
     `key` VARCHAR(100) NOT NULL PRIMARY KEY,
     `value` TEXT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ---------------------------------------------------------------------------
+-- Media library backing mandatory alt text + the admin's "choose from
+-- library" picker. Keyed by path (looked up at render/admin time) rather
+-- than FK'd from every content table — see media 008 migration.
+CREATE TABLE media (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    path VARCHAR(255) NOT NULL,
+    original_filename VARCHAR(255) NULL,
+    mime_type VARCHAR(100) NULL,
+    size_bytes INT UNSIGNED NULL,
+    width SMALLINT UNSIGNED NULL,
+    height SMALLINT UNSIGNED NULL,
+    alt_text VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_media_path (path)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

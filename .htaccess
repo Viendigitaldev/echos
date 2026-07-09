@@ -7,9 +7,14 @@
 
 RewriteEngine On
 
-# This project has no dedicated Apache vhost on MAMP (DocumentRoot is the
-# shared htdocs/ folder), so every request under /echos-dev/ is transparently
-# forwarded to the real webroot at /echos-dev/public/. On a real vhost whose
-# DocumentRoot points straight at /public, this file is not needed at all.
-RewriteCond %{REQUEST_URI} !^/echos-dev/public/
+# Transparently forwards every request to the real webroot at ./public/,
+# for hosts where the DocumentRoot can't be pointed straight at /public
+# (MAMP serving from a shared htdocs/ folder locally; shared hosts like
+# Hostinger whose primary domain locks DocumentRoot to public_html). The
+# "(.*/)?" tolerates whatever path prefix sits in front of "public/" —
+# "/echos-dev/public/..." locally, "/public/..." when this app's own root
+# *is* the DocumentRoot — so the same file works in both places unchanged.
+# On a real vhost whose DocumentRoot points straight at /public, this file
+# is not needed at all.
+RewriteCond %{REQUEST_URI} !^/(.*/)?public/
 RewriteRule ^(.*)$ public/$1 [L]

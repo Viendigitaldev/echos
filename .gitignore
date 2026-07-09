@@ -10,3 +10,11 @@
 .DS_Store
 Thumbs.db
 /.claude/
+
+# One-off deployment artifacts (built locally when doing the manual Hostinger
+# upload) — never meant to be version-controlled: a full DB dump can contain
+# real user data, and the zip/extracted-copy are just build output.
+/database/echos_dev_full_export.sql
+/echos-deploy.zip
+/echos-deploy/
+/production.env.template

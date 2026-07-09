@@ -1,5 +1,12 @@
 <?php
 /** @var array{type: string, message: string}|null $flash */
+
+use App\Models\Media;
+use App\Models\Setting;
+
+$customLogo = Setting::get('site_logo');
+$logoUrl = $customLogo !== '' ? url($customLogo) : asset('img/logo/white-logo.svg');
+$logoAlt = $customLogo !== '' ? Media::altTextFor($customLogo, Setting::get('site_name', 'Echos')) : Setting::get('site_name', 'Echos');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,13 +14,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Login — Echos</title>
+    <link rel="shortcut icon" href="<?= e(asset('img/logo/favicon.png')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/all.min.css')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/admin.css')) ?>">
 </head>
 <body class="login-wrap">
     <div class="login-card">
-        <div class="login-mark">E</div>
-        <h1>Echos Admin</h1>
+        <img src="<?= e($logoUrl) ?>" class="login-logo-img" alt="<?= e($logoAlt) ?>">
         <p class="login-subtitle">Sign in to manage your site</p>
 
         <?php if ($flash !== null): ?>

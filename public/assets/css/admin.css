@@ -65,19 +65,11 @@ body.admin-body {
   border-bottom: 1px solid var(--admin-border);
 }
 
-.admin-sidebar .brand .brand-mark {
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(145deg, var(--admin-accent), var(--admin-accent-deep));
-  box-shadow: var(--shadow-raised-sm), 0 0 14px var(--admin-accent-glow);
-  color: #0c0c0c;
-  font-size: 14px;
-  font-weight: 800;
-  flex-shrink: 0;
+.admin-sidebar .brand .brand-logo-img {
+  max-width: 100px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 .admin-sidebar nav a,
@@ -301,21 +293,16 @@ textarea.tall { min-height: 260px; }
   padding: 40px 36px;
   box-shadow: var(--shadow-raised), 0 0 60px rgba(155, 194, 122, 0.06);
 }
-.login-card .login-mark {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: linear-gradient(145deg, var(--admin-accent), var(--admin-accent-deep));
-  box-shadow: var(--shadow-raised-sm), 0 0 24px var(--admin-accent-glow);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #0c1208;
-  font-size: 20px;
-  font-weight: 800;
+.login-card .login-logo-img {
+  display: block;
+  max-width: 160px;
+  max-height: 48px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   margin: 0 auto 20px;
 }
-.login-card h1 { font-size: 20px; font-weight: 700; margin: 0 0 4px; text-align: center; }
+
 .login-card .login-subtitle { text-align: center; font-size: 13px; color: var(--admin-muted); margin: 0 0 24px; }
 
 .muted { color: var(--admin-muted); font-size: 13px; }

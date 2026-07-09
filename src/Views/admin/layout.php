@@ -4,11 +4,19 @@
  * @var array<string, mixed> $currentUser
  * @var array{type: string, message: string}|null $flash
  */
+
+use App\Models\Media;
+use App\Models\Setting;
+
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?? '';
 $isActive = static fn (string $prefix): string => str_contains($path, $prefix) ? ' active' : '';
 
 $userName = (string) ($currentUser['name'] ?? 'Admin');
 $initials = strtoupper(substr($userName, 0, 1));
+
+$customLogo = Setting::get('site_logo');
+$logoUrl = $customLogo !== '' ? url($customLogo) : asset('img/logo/white-logo.svg');
+$logoAlt = $customLogo !== '' ? Media::altTextFor($customLogo, Setting::get('site_name', 'Echos')) : Setting::get('site_name', 'Echos');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +24,7 @@ $initials = strtoupper(substr($userName, 0, 1));
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Echos Admin</title>
+    <link rel="shortcut icon" href="<?= e(asset('img/logo/favicon.png')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/all.min.css')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/admin.css')) ?>">
 </head>
@@ -23,8 +32,7 @@ $initials = strtoupper(substr($userName, 0, 1));
 <div class="admin-shell">
     <aside class="admin-sidebar">
         <div class="brand">
-            <span class="brand-mark">E</span>
-            Echos Admin
+            <img src="<?= e($logoUrl) ?>" class="brand-logo-img" alt="<?= e($logoAlt) ?>">
         </div>
         <nav>
             <a href="<?= e(url('/admin')) ?>" class="<?= $path === url('/admin') ? 'active' : '' ?>"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>

@@ -44,8 +44,8 @@ $socialLinkedin = Setting::get('social_linkedin_url', '#');
         <div class="footer-center">
 
             <div class="socials">
-                <a href="<?= e($socialX) ?>">𝕏</a>
-                <a href="<?= e($socialLinkedin) ?>">in</a>
+                <a href="<?= e($socialX) ?>" target="_blank" rel="noopener noreferrer">𝕏</a>
+                <a href="<?= e($socialLinkedin) ?>" target="_blank" rel="noopener noreferrer">in</a>
 
             </div>
 
