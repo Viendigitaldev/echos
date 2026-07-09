@@ -15,12 +15,6 @@
   left: -9999px;
 }
 
-.error-page-image {
-  max-width: 420px;
-  width: 100%;
-  height: auto;
-}
-
 /* Contact form validation feedback — success no longer renders here (it
    redirects to /thank-you), but the same component still handles errors. */
 .contact-flash {

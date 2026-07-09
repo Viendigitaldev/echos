@@ -26,9 +26,7 @@
 
                     <section class="section-padding">
                         <div class="container text-center">
-                            <img src="<?= e(asset('img/inner-page/404.png')) ?>" alt="Page not found" class="error-page-image">
-                            <p class="hero-para">It might have been moved, renamed, or never existed. Let's get you back on track.</p>
-                            <div class="hero-button wow fadeInUp mt-5">
+                            <div class="hero-button wow fadeInUp">
                                 <a href="<?= e(url('/')) ?>" class="start-building-btn">
                                     <span>Back to Home</span>
                                     <span class="icon-wrap">
