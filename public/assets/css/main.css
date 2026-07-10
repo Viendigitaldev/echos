@@ -1675,23 +1675,15 @@ span {
   align-items: center;
 }
 .mobile-menu-area .mobile-menu-main .menu-body .menu-list ul li a i {
-  width: 40px;
-  height: 40px;
   color: #fff;
   text-align: center;
   line-height: 32px;
-  font-size: 12px;
+  font-size: 15px;
   border-radius: 3px;
   transition: all 0.4s ease-in-out;
   margin-right: 15px;
 }
-.mobile-menu-area .mobile-menu-main .menu-body .menu-list ul li a:hover {
-  color: var(--theme);
-}
-.mobile-menu-area .mobile-menu-main .menu-body .menu-list ul li a:hover i {
-  background-color: var(--theme);
-  color: var(--white);
-}
+
 .mobile-menu-area .mobile-menu-main .menu-body .menu-list ul li ul {
   padding-left: 0;
   display: none;
@@ -3683,7 +3675,7 @@ span {
 }
 @media (max-width: 991px) {
   .section-padding {
-    padding: 100px 0 0px;
+    padding: 100px 0px;
   }
 }
 
@@ -13349,17 +13341,19 @@ i.fa-solid.fa-arrow-up-right {
   }
 
   .footer-content {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
     text-align: center;
   }
 
   .footer-links.right {
     text-align: center;
+order: 2;
   }
 
   .socials {
     gap: 25px;
+order: 2;
   }
 
   .footer-logo {
@@ -15114,7 +15108,7 @@ section.outcome-section1 .vision-content {
     padding-top: 0px;
   }
     .elite-content p {
-        margin: 10px auto;
+        margin: 30px auto;
         width: 100%;
         font-size: 16px;
     }
@@ -15471,6 +15465,9 @@ section.builders-section {
 .news-section .section-title-area{
 padding-bottom: 0px;
 }
+ .post-content ul li {
+        font-size: 14px !important;
+    }
 }
 
 
@@ -15535,17 +15532,29 @@ padding-bottom: 0px;
 .news-section .section-title-area{
 padding-bottom: 0px;
 }
+ .post-content ul li {
+        font-size: 14px;
+    }
 }
 
 
 @media (min-width: 768px) and (max-width: 991.98px) {
+p{
+font-size: 21px !important;
+}
+    .elite-content p {
+        margin: auto auto 60px;
+    }
+.industries-slide-desc{
+max-width: 100% !important;
+
+}
   p.hero-para {
     padding-top: 30px !important;
+max-width: 100%;
+font-size: 21px !important;
   }
-  .partner-elite-section {
-    padding: 50px 0px;
-    position: relative;
-  }
+
   .footer-center {
     text-align: center;
     order: 3;
@@ -15589,7 +15598,8 @@ padding-bottom: 0px;
     padding: 50px 0px;
   }
   .builders-logos {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+gap: 10px;
     order: 2;
   }
   section.builders-section,
@@ -15616,4 +15626,99 @@ padding-bottom: 0px;
     justify-self: center;
     width: calc(50% - 10px);
   }
+ .post-content ul li {
+        font-size: 14px;
+    }
 }
+
+
+
+@media (min-width: 992px) and (max-width: 1024.98px) {
+h2{
+font-size: 65px !important;
+}
+p{
+font-size: 25px !important;
+width: 100%;
+max-width: 100% !important;
+line-height: 40px;
+}
+.divider-line{
+display: none;
+}
+.locations-right {
+    order: 2;
+}
+.locations-left {
+    order: 1;
+}
+p.hero-para {
+    padding-top: 0px;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    font-size: 30px !important;
+    max-width: 100%;
+    line-height: 44px;
+}
+    .about-wrapper .about-content .text {
+        font-size: 21px !important;
+        margin-bottom: 30px;
+    }
+    .work-process-wrapper-3 {
+        grid-template-columns: repeat(5, 1fr);
+}
+section.work-process-section-3{
+padding-bottom: 0px;
+}
+.news-section .text-items p{
+display: none;
+}
+.mindset-grid {
+    grid-template-columns: 100%;
+gap: 20px;
+}
+    .builders-wrapper {
+        flex-direction: column;
+        gap: 50px;
+    }
+    .builders-logos {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        order: 2;
+    }
+    .builders-content {
+        max-width: 100%;
+        text-align: center;
+        order: 1;
+    }
+.logo-card1 {
+    width: 200px;
+    height: 200px;
+}
+    .leader-row, .leader-row.reverse {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+.production-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+.mobile-menu-area .mobile-menu-main .menu-body .menu-list ul li a {
+    color: var(--white);
+    font-size: 21px;
+    font-weight: 500;
+    border-top: 1px solid rgba(193, 210, 206, 0.0705882353) !important;
+    width: 100%;
+    padding: 20px 30px;
+    padding-right: 10px;
+    transition: all 0.4s ease-in-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+ .post-content li {
+        font-size: 14px;
+    }
+}
+
