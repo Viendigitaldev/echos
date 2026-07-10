@@ -6,6 +6,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const grid = document.getElementById("blog-grid");
     const emptyState = document.getElementById("blog-empty-state");
 
+    // Mobile category bottom sheet — same filtering logic as the desktop
+    // tabs below, just a different picker UI (distyl.ai/blog's mobile pattern).
+    const sheetTrigger = document.getElementById("blog-category-trigger");
+    const sheetOverlay = document.getElementById("blog-category-sheet-overlay");
+    const sheet = document.getElementById("blog-category-sheet");
+    const sheetClose = document.getElementById("blog-category-sheet-close");
+    const sheetItems = document.querySelectorAll(".blog-category-sheet-item");
+
+    // GSAP ScrollSmoother (main.js) applies a CSS transform to #smooth-content
+    // to drive the smooth-scroll effect, which makes it the containing block
+    // for any position:fixed descendant — so the sheet/overlay would render
+    // at some offset down the (very tall) transformed content instead of
+    // pinned to the actual viewport. Moving them to be direct children of
+    // <body> (a sibling of #smooth-wrapper, like the sticky header already
+    // is) sidesteps that entirely.
+    if (sheetOverlay && sheet) {
+        document.body.appendChild(sheetOverlay);
+        document.body.appendChild(sheet);
+    }
+
     if (!tabButtons.length || !cards.length) {
         return;
     }
@@ -16,6 +36,23 @@ document.addEventListener("DOMContentLoaded", () => {
         tabButtons.forEach((btn) => {
             btn.classList.toggle("active", activeFilters.includes(btn.dataset.filter));
         });
+        sheetItems.forEach((item) => {
+            item.classList.toggle("active", activeFilters.includes(item.dataset.filter));
+        });
+    }
+
+    function openSheet() {
+        if (sheetOverlay && sheet) {
+            sheetOverlay.classList.add("open");
+            sheet.classList.add("open");
+        }
+    }
+
+    function closeSheet() {
+        if (sheetOverlay && sheet) {
+            sheetOverlay.classList.remove("open");
+            sheet.classList.remove("open");
+        }
     }
 
     function applyFilters() {
@@ -71,6 +108,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     tabButtons.forEach((button) => {
         button.addEventListener("click", () => toggleFilter(button.dataset.filter));
+    });
+
+    if (sheetTrigger) {
+        sheetTrigger.addEventListener("click", openSheet);
+    }
+    if (sheetClose) {
+        sheetClose.addEventListener("click", closeSheet);
+    }
+    if (sheetOverlay) {
+        sheetOverlay.addEventListener("click", closeSheet);
+    }
+    sheetItems.forEach((item) => {
+        item.addEventListener("click", () => {
+            setSingleFilter(item.dataset.filter);
+            closeSheet();
+        });
     });
 
     // Clicking a post card's category tag jumps straight to that single filter.

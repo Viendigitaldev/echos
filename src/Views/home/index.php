@@ -228,7 +228,7 @@ $perspectives = $blocks['perspectives_teaser'];
                                     </div>
                                 </div>
                             </div>
-                            <div class="work-process-wrapper-3">
+                            <div class="work-process-wrapper-3 d-none d-lg-grid">
                                 <div class="line-1">
                                     <img src="<?= e(asset('img/home-3/line.png')) ?>" alt="img">
                                 </div>
@@ -244,6 +244,30 @@ $perspectives = $blocks['perspectives_teaser'];
                                     </div>
                                 </div>
                                 <?php endforeach; ?>
+                            </div>
+
+                            <!-- Mobile/tablet: swipeable carousel instead of the hover-reveal grid above -->
+                            <div class="industries-slider-mobile d-lg-none">
+                                <div class="swiper industries-swiper">
+                                    <div class="swiper-wrapper">
+                                        <?php foreach ($industries as $industry): ?>
+                                        <div class="swiper-slide">
+                                            <div class="industries-slide-card">
+                                                <div class="industries-slide-icon">
+                                                    <img src="<?= e(url($industry['icon_path'])) ?>" alt="<?= e(Media::altTextFor($industry['icon_path'], $industry['title'])) ?>">
+                                                </div>
+                                                <h3 class="industries-slide-title"><?= e($industry['title']) ?></h3>
+                                                <p class="industries-slide-desc"><?= e($industry['description']) ?></p>
+                                            </div>
+                                        </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                                <div class="industries-slider-nav">
+                                    <button class="industries-prev" aria-label="Previous industry"><i class="fa-solid fa-chevron-left"></i></button>
+                                    <div class="swiper-pagination industries-pagination"></div>
+                                    <button class="industries-next" aria-label="Next industry"><i class="fa-solid fa-chevron-right"></i></button>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -262,6 +286,9 @@ $perspectives = $blocks['perspectives_teaser'];
             <!-- Right Content -->
             <div class="media-content">
                 <h2 class="wa_title_spilt_1"><?= e($media['heading']) ?></h2>
+                <div class="media-image-mobile">
+<img src="<?= e(asset('img/inner-page/media2.jpg')) ?>" alt="In The Media">
+</div>
 
                 <p>
                     <?= e($media['body']) ?>

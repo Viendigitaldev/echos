@@ -546,6 +546,32 @@ if (typeof Swiper !== "undefined" && $(".service-slider-3").length > 0) {
 }
 
         /* ================================
+      Industries Slider Js Start
+    ================================ */
+if (typeof Swiper !== "undefined" && $(".industries-swiper").length > 0) {
+    const industriesSlider = new Swiper(".industries-swiper", {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        speed: 500,
+
+        loop: true,
+        watchOverflow: false,
+
+        autoplay: false,
+
+        navigation: {
+            nextEl: ".industries-next",
+            prevEl: ".industries-prev",
+        },
+
+        pagination: {
+            el: ".industries-pagination",
+            clickable: true,
+        },
+    });
+}
+
+        /* ================================
       News Slider Js Start
     ================================ */
 
