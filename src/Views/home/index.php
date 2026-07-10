@@ -31,6 +31,9 @@ $perspectives = $blocks['perspectives_teaser'];
                                     <h1 class="wa_title_spilt_1">
                                       <?= e($hero['heading']) ?>
                                     </h1>
+                                    <div class="hero-circle-mobile">
+                                        <img src="<?= e(asset('img/home-1/hero-circle.png')) ?>" alt="img">
+                                    </div>
                                     <p class="hero-para"><?= e($hero['body']) ?>
 </p>
                                     <div class="hero-button wow fadeInUp" data-wow-delay=".3s">

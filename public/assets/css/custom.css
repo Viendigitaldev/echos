@@ -263,6 +263,36 @@
   min-height: 92px;
 }
 
+/* Home hero: on desktop the rotating circle lives in its own column
+   (.hero-1 .col-xl-5 .hero-circle, main.css) beside the heading/text column.
+   Once those columns stack (<1200px, the col-xl breakpoint), that circle
+   would render below the button instead of visually relating to the text at
+   all, and main.css already hides it entirely below 768px. This is a second,
+   mobile/tablet-only copy of the same image placed directly in the markup
+   between the heading and body text, shown only in the stacked range so it
+   reads as "next to" the heading there instead of trailing the whole block.
+   The desktop circle/column is untouched. */
+.hero-circle-mobile {
+  display: none;
+}
+@media (max-width: 1199px) {
+  .hero-1 .col-xl-5 .hero-circle {
+    display: none;
+  }
+  .hero-circle-mobile {
+    display: block;
+    width: 100%;
+    max-width: 220px;
+    margin: 20px auto;
+    overflow: hidden;
+  }
+  .hero-circle-mobile img {
+    width: 100%;
+    height: auto;
+    animation: cir36 30s linear infinite;
+  }
+}
+
 /* 404 page's CTA section: main.css's .section-padding (100px top/bottom) is
    sized for sections full of content — here it only wraps one button, so
    the same padding reads as a large dead gap above and below it. Scoped to
