@@ -8,6 +8,7 @@ use App\Http\Request;
 use App\Http\View;
 use App\Models\Page;
 use App\Models\Setting;
+use App\Services\JsonLd;
 use App\Services\SeoMetaService;
 
 final class LegalController
@@ -27,12 +28,17 @@ final class LegalController
         $page = Page::findBySlug($slug);
         $blocks = Page::blocksFor((int) $page['id']);
         $seo = SeoMetaService::resolve($page, Setting::get('site_name', 'Echos'));
+        $crumbLabel = $blocks['content']['heading'] ?: ucwords(str_replace('-', ' ', $slug));
 
         (new View())->render('legal/show', [
             'title' => $seo['title'],
             'metaDescription' => $seo['description'],
             'ogImage' => $seo['ogImage'],
             'block' => $blocks['content'],
+            'jsonLd' => [JsonLd::breadcrumb([
+                ['name' => 'Home', 'path' => '/'],
+                ['name' => $crumbLabel, 'path' => '/' . $slug],
+            ])],
         ]);
     }
 }

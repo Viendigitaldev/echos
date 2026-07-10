@@ -9,6 +9,7 @@ use App\Http\View;
 use App\Models\Page;
 use App\Models\Setting;
 use App\Models\TeamMember;
+use App\Services\JsonLd;
 use App\Services\SeoMetaService;
 
 final class AboutController
@@ -25,6 +26,10 @@ final class AboutController
             'ogImage' => $seo['ogImage'],
             'blocks' => $blocks,
             'team' => TeamMember::published(),
+            'jsonLd' => [JsonLd::breadcrumb([
+                ['name' => 'Home', 'path' => '/'],
+                ['name' => 'About', 'path' => '/about'],
+            ])],
         ]);
     }
 }

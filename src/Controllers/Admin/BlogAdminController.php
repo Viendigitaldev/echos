@@ -7,6 +7,7 @@ namespace App\Controllers\Admin;
 use App\Http\Request;
 use App\Models\BlogCategory;
 use App\Models\BlogPost;
+use App\Models\Redirect;
 use App\Services\SitemapGenerator;
 use App\Services\SlugService;
 
@@ -94,6 +95,10 @@ final class BlogAdminController extends AdminController
 
         BlogPost::update((int) $id, $data);
         SitemapGenerator::regenerate();
+
+        if (isset($data['slug'])) {
+            Redirect::recordSlugChange('/perspectives/' . $item['slug'], '/perspectives/' . $data['slug']);
+        }
 
         $this->flash('success', 'Post updated.');
         redirect('/admin/blog');

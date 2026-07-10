@@ -3,6 +3,7 @@
 use App\Models\MenuItem;
 use App\Models\Setting;
 use App\Services\AssetManager;
+use App\Services\JsonLd;
 use App\Support\Url;
 
 /**
@@ -11,6 +12,7 @@ use App\Support\Url;
  * @var string|null $metaDescription
  * @var string|null $ogImage
  * @var bool|null $noindex
+ * @var array<int, array<string, mixed>>|null $jsonLd additional per-page schema blocks (breadcrumb, article, ...)
  */
 
 $headerMenu = MenuItem::headerTree();
@@ -48,6 +50,7 @@ $googleSiteVerification = Setting::get('google_site_verification');
         <!--<< Favcion >>-->
         <link rel="shortcut icon" href="<?= e(asset('img/logo/favicon.png')) ?>">
         <?= AssetManager::renderStyles() ?>
+        <?= JsonLd::render(array_merge([JsonLd::organization()], $jsonLd ?? [])) ?>
     </head>
     <body>
 

@@ -12,6 +12,7 @@ use App\Models\BlogPost;
 use App\Models\Page;
 use App\Models\Setting;
 use App\Services\AssetManager;
+use App\Services\JsonLd;
 use App\Services\SeoMetaService;
 
 final class BlogController
@@ -31,6 +32,10 @@ final class BlogController
             'breadcrumb' => $blocks['breadcrumb'],
             'posts' => BlogPost::publishedAll(),
             'categories' => BlogCategory::withPublishedCounts(),
+            'jsonLd' => [JsonLd::breadcrumb([
+                ['name' => 'Home', 'path' => '/'],
+                ['name' => 'Perspectives', 'path' => '/perspectives'],
+            ])],
         ]);
     }
 
@@ -39,7 +44,7 @@ final class BlogController
         $post = BlogPost::findPublishedBySlug($slug);
 
         if ($post === null) {
-            Router::renderNotFound();
+            Router::renderNotFound($request->path());
             return;
         }
 
@@ -53,6 +58,14 @@ final class BlogController
             'metaDescription' => $seo['description'],
             'ogImage' => $seo['ogImage'],
             'post' => $post,
+            'jsonLd' => [
+                JsonLd::breadcrumb([
+                    ['name' => 'Home', 'path' => '/'],
+                    ['name' => 'Perspectives', 'path' => '/perspectives'],
+                    ['name' => $post['title'], 'path' => '/perspectives/' . $post['slug']],
+                ]),
+                JsonLd::article($post),
+            ],
         ]);
     }
 }

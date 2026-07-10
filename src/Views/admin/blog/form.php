@@ -40,9 +40,9 @@ $action = $item === null ? url('/admin/blog') : url('/admin/blog/' . $item['id']
         </div>
 
         <div class="form-group">
-            <label for="body">Body (HTML)</label>
-            <textarea id="body" name="body" class="tall"><?= e($item['body'] ?? '') ?></textarea>
-            <div class="hint">Accepts HTML (e.g. &lt;h2&gt;, &lt;p&gt;). Rendered as-is on the post page.</div>
+            <label for="body">Body</label>
+            <textarea id="body" name="body" class="tall" data-rich-editor><?= e($item['body'] ?? '') ?></textarea>
+            <div class="hint">Use Visual for normal editing, or switch to HTML to write markup directly. Rendered as-is on the post page.</div>
         </div>
 
         <?php
@@ -85,3 +85,7 @@ $action = $item === null ? url('/admin/blog') : url('/admin/blog/' . $item['id']
         <a href="<?= e(url('/admin/blog')) ?>" class="btn">Cancel</a>
     </form>
 </div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css">
+<script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+<script src="<?= e(asset('js/admin-rich-editor.js')) ?>"></script>
