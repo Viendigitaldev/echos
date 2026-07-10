@@ -47,8 +47,13 @@
 }
 @media (max-width: 991px) {
   .blog-filter-bar {
-    grid-template-columns: 1fr;
-    justify-items: center;
+    /* .blog-category-tabs is display:none on mobile (replaced by the
+       trigger icon, see .blog-category-trigger below), so this 3-column
+       template only ever lays out search / trigger / sort here — keeps
+       everything on one row instead of stacking. */
+    grid-template-columns: 1fr auto auto;
+    gap: 12px;
+    padding: 16px 20px;
   }
 }
 
@@ -61,6 +66,12 @@
   border-radius: 50px;
   min-width: 240px;
   justify-self: start;
+}
+@media (max-width: 991px) {
+  .blog-search-form {
+    min-width: 0;
+    justify-self: stretch;
+  }
 }
 .blog-search-form i {
   color: var(--text);
@@ -130,6 +141,103 @@
 .blog-sort-select option {
   background: #111;
   color: var(--white);
+}
+
+/* Mobile category picker: replaces the desktop pill-tab row (.blog-category-tabs,
+   hidden below lg) with a single icon that opens a bottom sheet — matches
+   distyl.ai/blog's mobile pattern, since a wrapped row of pill buttons
+   doesn't fit well on phones. */
+.blog-category-trigger {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #111;
+  /* Matches .blog-sort-form i right next to it. */
+  color: #9bc27a;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.blog-category-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+.blog-category-sheet-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.blog-category-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #111;
+  border-radius: 20px 20px 0 0;
+  padding: 20px 0 10px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 1001;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.blog-category-sheet.open {
+  transform: translateY(0);
+}
+.blog-category-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.blog-category-sheet-close {
+  background: transparent;
+  border: none;
+  color: var(--white);
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px;
+}
+.blog-category-sheet-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.blog-category-sheet-item {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--white);
+  font-size: 16px;
+  font-family: inherit;
+  padding: 14px 24px;
+}
+.blog-category-sheet-item i {
+  color: #9bc27a;
+  margin-right: 10px;
+  opacity: 0;
+  width: 14px;
+  display: inline-block;
+}
+.blog-category-sheet-item.active i {
+  opacity: 1;
 }
 
 .blog-empty-state {
@@ -300,4 +408,108 @@
    content-heavy pages still rely on). */
 .error-page-cta {
   padding: 20px 0 60px;
+}
+
+/* Industries section on mobile/tablet: the desktop grid
+   (.work-process-wrapper-3, main.css) relies on :hover to reveal each
+   card's description, which never triggers on touch. Below the lg
+   breakpoint (matches the "d-lg-none" swap in the markup) it's replaced
+   entirely by a one-card-at-a-time Swiper carousel instead, so the
+   description is always visible without needing hover. */
+.industries-slide-card {
+  text-align: center;
+  padding: 10px 10px 40px;
+}
+.industries-slide-icon {
+  /* Same 104px circle as .work-process-wrapper-3 .work-process-items-3
+     .icon (main.css), but the icon files are 512x512 natively and
+     overflow:hidden alone didn't reliably clip them here — explicitly
+     sizing the <img> below is what actually keeps it inside the circle.
+     Background is green rather than desktop's default gray since every
+     card in this carousel is the one currently in view (there's no
+     separate "active" state to switch into, unlike desktop's
+     hover-triggered .icon::before transition). */
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background-color: var(--theme);
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.industries-slide-icon img {
+  /* main.css's generic ".icon img { filter: invert(1) }" flips these
+     black-line-art icons to white — it doesn't match this element since
+     the wrapper class here is "industries-slide-icon", not "icon".
+     Replicating the same filter directly keeps the icon visually
+     identical to desktop instead of picking a different wrapper name. */
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  filter: invert(1);
+}
+.industries-slide-title {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+.industries-slide-desc {
+  font-size: 14px;
+  font-weight: 500;
+  color: #d0d0d0;
+  max-width: 320px;
+  margin: 0 auto;
+}
+.industries-slider-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+.industries-prev,
+.industries-next {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.industries-pagination {
+  /* Swiper's default inactive bullet is black at 20% opacity (its own
+     --swiper-pagination-bullet-inactive-* variables) — invisible against
+     this site's black background unless themed. Setting swiper's own CSS
+     variables is the supported way to theme it.
+     The plain position/display/width overrides below need !important:
+     swiper-bundle.min.css's own ".swiper-pagination { position: absolute;
+     ... }" has the same specificity (one class) and loads after
+     custom.css, so without !important it silently wins — confirmed via
+     computed styles showing position:absolute and width:606px despite
+     this rule "setting" static/auto. That's what was pushing the bullets
+     out of the nav row (the bullets themselves rendered fine; only the
+     container's own position/size were being ignored). */
+  --swiper-pagination-bullet-inactive-color: rgba(255, 255, 255, 0.25);
+  --swiper-pagination-bullet-inactive-opacity: 1;
+  --swiper-pagination-color: var(--theme);
+  position: static !important;
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  width: auto !important;
+  min-height: 8px;
+}
+/* Belt-and-suspenders: force the same colors directly in case something
+   else in the cascade is still winning over the custom properties above. */
+.industries-pagination .swiper-pagination-bullet {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  opacity: 1 !important;
+}
+.industries-pagination .swiper-pagination-bullet-active {
+  background-color: var(--theme) !important;
 }

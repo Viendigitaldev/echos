@@ -35,12 +35,19 @@ use App\Models\Media;
                             <input type="text" id="blog-search" placeholder="Search articles...">
                         </div>
 
-                        <div class="blog-category-tabs">
+                        <div class="blog-category-tabs d-none d-lg-flex">
                             <button type="button" class="blog-tab active" data-filter="all">All</button>
                             <?php foreach ($categories as $cat): ?>
                             <button type="button" class="blog-tab" data-filter="<?= e($cat['slug']) ?>"><?= e(strtoupper($cat['name'])) ?></button>
                             <?php endforeach; ?>
                         </div>
+
+                        <!-- Mobile: category tabs above are replaced by a single icon that
+                             opens a bottom sheet (matches distyl.ai/blog's mobile pattern),
+                             since a wrapped row of pill buttons doesn't fit well on phones. -->
+                        <button type="button" class="blog-category-trigger d-lg-none" id="blog-category-trigger" aria-label="Filter by category" aria-haspopup="true">
+                            <i class="fa-solid fa-sliders"></i>
+                        </button>
 
                         <div class="blog-sort-form">
                             <i class="fa-solid fa-arrow-down-short-wide"></i>
@@ -52,6 +59,31 @@ use App\Models\Media;
                         </div>
                     </div>
                     <!-- Blog Filter Bar End -->
+
+                    <!-- Mobile category bottom sheet -->
+                    <div class="blog-category-sheet-overlay" id="blog-category-sheet-overlay"></div>
+                    <div class="blog-category-sheet" id="blog-category-sheet" role="dialog" aria-modal="true" aria-label="Filter by category">
+                        <div class="blog-category-sheet-header">
+                            <span>Category</span>
+                            <button type="button" class="blog-category-sheet-close" id="blog-category-sheet-close" aria-label="Close">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <ul class="blog-category-sheet-list">
+                            <li>
+                                <button type="button" class="blog-category-sheet-item active" data-filter="all">
+                                    <i class="fa-solid fa-check"></i> All
+                                </button>
+                            </li>
+                            <?php foreach ($categories as $cat): ?>
+                            <li>
+                                <button type="button" class="blog-category-sheet-item" data-filter="<?= e($cat['slug']) ?>">
+                                    <i class="fa-solid fa-check"></i> <?= e($cat['name']) ?>
+                                </button>
+                            </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
 
  <!-- News Section Start -->
                     <section class="news-section-5 fix section-padding">
