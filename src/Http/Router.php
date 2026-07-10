@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http;
 
+use App\Models\Redirect;
+
 final class Router
 {
     /** @var array<int, array{method: string, pattern: string, regex: string, params: array<int, string>, handler: array{0: class-string, 1: string}}> */
@@ -59,11 +61,26 @@ final class Router
             return;
         }
 
-        self::renderNotFound();
+        self::renderNotFound($method === 'GET' ? $path : null);
     }
 
-    public static function renderNotFound(): void
+    /**
+     * Also used by controllers when a specific record lookup fails (e.g.
+     * BlogController::show() on an unknown slug) — not just the router's
+     * own "no route pattern matched" fallback — so pass the current path
+     * whenever it's known, to give a slug-changed redirect a chance to
+     * fire before falling through to a real 404.
+     */
+    public static function renderNotFound(?string $path = null): void
     {
+        if ($path !== null) {
+            $redirect = Redirect::findByFromPath($path);
+            if ($redirect !== null) {
+                header('Location: ' . url($redirect['to_path']), true, 301);
+                return;
+            }
+        }
+
         http_response_code(404);
         (new View())->render('errors/404', [
             'title' => '404 — Page Not Found',

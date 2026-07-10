@@ -148,7 +148,8 @@ CREATE TABLE contact_submissions (
     ip_address VARCHAR(45) NULL,
     is_read TINYINT(1) NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_contact_submissions_read_created (is_read, created_at)
+    INDEX idx_contact_submissions_read_created (is_read, created_at),
+    INDEX idx_contact_submissions_ip_created (ip_address, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ---------------------------------------------------------------------------
@@ -198,4 +199,16 @@ CREATE TABLE media (
     alt_text VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY uq_media_path (path)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ---------------------------------------------------------------------------
+-- Auto-populated whenever a blog post's slug changes (title edit), so an old
+-- bookmarked/indexed URL 301s to the new one instead of 404ing. Always a
+-- permanent redirect by design — no status_code column needed.
+CREATE TABLE redirects (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    from_path VARCHAR(255) NOT NULL,
+    to_path VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_redirects_from_path (from_path)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

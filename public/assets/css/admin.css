@@ -271,6 +271,53 @@ input:focus, textarea:focus, select:focus {
 textarea { min-height: 100px; resize: vertical; }
 textarea.tall { min-height: 260px; }
 
+/* ----------------------------------------------------------- Rich editor */
+
+.rich-editor-tabs { display: flex; gap: 6px; margin-bottom: 8px; }
+.rich-editor-tab {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1px solid var(--admin-border-strong);
+  background: var(--admin-panel-soft);
+  color: var(--admin-muted);
+  border-radius: 7px;
+  cursor: pointer;
+}
+.rich-editor-tab.active { background: var(--admin-accent-tint); color: var(--admin-accent); border-color: rgba(155, 194, 122, 0.3); }
+
+.rich-editor-source { display: none; }
+.rich-editor.mode-html .rich-editor-canvas { display: none; }
+.rich-editor.mode-html .rich-editor-source { display: block; }
+
+.rich-editor .ql-toolbar.ql-snow {
+  background: var(--admin-panel-soft);
+  border: 1px solid var(--admin-border);
+  border-bottom: none;
+  border-radius: 9px 9px 0 0;
+}
+.rich-editor .ql-container.ql-snow {
+  background: #101010;
+  border: 1px solid var(--admin-border);
+  border-radius: 0 0 9px 9px;
+  font-size: 14px;
+  font-family: inherit;
+}
+.rich-editor .ql-editor { min-height: 220px; color: var(--admin-text); }
+.rich-editor .ql-editor.ql-blank::before { color: var(--admin-muted-2); font-style: normal; }
+.rich-editor .ql-snow .ql-stroke { stroke: var(--admin-muted); }
+.rich-editor .ql-snow .ql-fill { fill: var(--admin-muted); }
+.rich-editor .ql-snow .ql-picker { color: var(--admin-muted); }
+.rich-editor .ql-snow .ql-picker-options { background: var(--admin-panel); border: 1px solid var(--admin-border-strong); }
+.rich-editor .ql-snow .ql-picker-item:hover { color: var(--admin-accent); }
+.rich-editor .ql-toolbar.ql-snow button:hover .ql-stroke,
+.rich-editor .ql-toolbar.ql-snow button.ql-active .ql-stroke { stroke: var(--admin-accent); }
+.rich-editor .ql-toolbar.ql-snow button:hover .ql-fill,
+.rich-editor .ql-toolbar.ql-snow button.ql-active .ql-fill { fill: var(--admin-accent); }
+.rich-editor .ql-snow.ql-toolbar button:hover,
+.rich-editor .ql-snow.ql-toolbar button.ql-active { color: var(--admin-accent); }
+
 .checkbox-group label { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--admin-text); font-weight: 500; }
 .checkbox-group input { width: auto; box-shadow: none; }
 

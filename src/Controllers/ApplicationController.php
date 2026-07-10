@@ -11,6 +11,7 @@ use App\Models\ApplicationItem;
 use App\Models\Page;
 use App\Models\Setting;
 use App\Services\AssetManager;
+use App\Services\JsonLd;
 use App\Services\SeoMetaService;
 
 final class ApplicationController
@@ -31,6 +32,10 @@ final class ApplicationController
             'breadcrumb' => $blocks['breadcrumb'],
             'applications' => ApplicationItem::forApplicationsPage(),
             'categories' => ApplicationCategory::withPublishedCounts(),
+            'jsonLd' => [JsonLd::breadcrumb([
+                ['name' => 'Home', 'path' => '/'],
+                ['name' => 'Applications', 'path' => '/applications'],
+            ])],
         ]);
     }
 }

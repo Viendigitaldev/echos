@@ -11,11 +11,16 @@ use App\Models\OfficeLocation;
 use App\Models\Page;
 use App\Models\Setting;
 use App\Services\CsrfService;
+use App\Services\JsonLd;
 use App\Services\Mailer;
 use App\Services\SeoMetaService;
 
 final class ContactController
 {
+    /** Max submissions allowed from one IP within RATE_LIMIT_WINDOW_MINUTES. */
+    private const RATE_LIMIT_MAX = 3;
+    private const RATE_LIMIT_WINDOW_MINUTES = 15;
+
     public function index(Request $request): void
     {
         $page = Page::findBySlug('contact');
@@ -34,6 +39,10 @@ final class ContactController
             'locations' => OfficeLocation::ordered(),
             'flash' => $flash,
             'old' => $_SESSION['contact_old'] ?? [],
+            'jsonLd' => [JsonLd::breadcrumb([
+                ['name' => 'Home', 'path' => '/'],
+                ['name' => 'Contact', 'path' => '/contact'],
+            ])],
         ]);
 
         unset($_SESSION['contact_old']);
@@ -56,6 +65,13 @@ final class ContactController
             // Silently drop bot submissions without revealing the honeypot to the client.
             redirect('/contact');
         }
+
+        if (ContactSubmission::countRecentByIp($request->ip(), self::RATE_LIMIT_WINDOW_MINUTES) >= self::RATE_LIMIT_MAX) {
+            $_SESSION['contact_flash'] = ['type' => 'error', 'message' => 'Too many submissions from this connection. Please try again in a few minutes.'];
+            $_SESSION['contact_old'] = $request->all();
+            redirect('/contact');
+        }
+
         if ($name === '') {
             $errors[] = 'Name is required.';
         }
