@@ -17,11 +17,11 @@ final class ApplicationCategory extends Model
     /** @return array<int, array<string, mixed>> */
     public static function withPublishedCounts(): array
     {
-        $sql = "SELECT c.id, c.name, c.slug, COUNT(a.id) AS application_count
+        $sql = "SELECT c.id, c.name, c.slug, c.sort_order, COUNT(a.id) AS application_count
                 FROM application_categories c
                 LEFT JOIN applications a ON a.category_id = c.id AND a.status = 'published'
-                GROUP BY c.id, c.name, c.slug
-                ORDER BY c.name ASC";
+                GROUP BY c.id, c.name, c.slug, c.sort_order
+                ORDER BY c.sort_order ASC, c.name ASC";
 
         return \App\Database\Connection::get()->query($sql)->fetchAll();
     }

@@ -14,6 +14,7 @@ use App\Services\CsrfService;
 use App\Services\JsonLd;
 use App\Services\Mailer;
 use App\Services\SeoMetaService;
+use App\Support\Url;
 
 final class ContactController
 {
@@ -88,23 +89,53 @@ final class ContactController
             redirect('/contact');
         }
 
-        ContactSubmission::insert([
-            'reason' => $request->trimmedInput('reason'),
+        $reason = $request->trimmedInput('reason');
+        $phone = $request->trimmedInput('phone');
+        $company = $request->trimmedInput('company');
+        $ip = $request->ip();
+
+        $submissionId = ContactSubmission::insert([
+            'reason' => $reason,
             'name' => $name,
             'email' => $email,
-            'phone' => $request->trimmedInput('phone'),
-            'company' => $request->trimmedInput('company'),
+            'phone' => $phone,
+            'company' => $company,
             'message' => $message,
-            'ip_address' => $request->ip(),
+            'ip_address' => $ip,
         ]);
 
         $notifyEmail = Setting::get('contact_notify_email');
         if ($notifyEmail !== '') {
-            Mailer::send(
-                $notifyEmail,
-                'New contact submission — Echos',
-                "Name: {$name}\nEmail: {$email}\nMessage:\n{$message}"
-            );
+            $siteName = Setting::get('site_name', 'Echos');
+            $logo = Setting::get('site_logo');
+            $submittedAt = date('M j, Y \a\t g:i A');
+            $adminUrl = Url::absolute('/admin/contact-submissions/' . $submissionId);
+
+            $htmlBody = (new View())->renderToString('emails/contact-notification', [
+                'siteName' => $siteName,
+                'logoUrl' => $logo !== '' ? Url::absolute($logo) : '',
+                'reason' => $reason,
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone,
+                'company' => $company,
+                'message' => $message,
+                'submittedAt' => $submittedAt,
+                'ipAddress' => $ip,
+                'adminUrl' => $adminUrl,
+            ]);
+
+            $altBody = "New contact form submission\n\n"
+                . ($reason !== '' ? "Reason: {$reason}\n" : '')
+                . "Name: {$name}\n"
+                . "Email: {$email}\n"
+                . ($phone !== '' ? "Phone: {$phone}\n" : '')
+                . ($company !== '' ? "Company: {$company}\n" : '')
+                . "\nMessage:\n{$message}\n\n"
+                . "Submitted {$submittedAt} from IP {$ip}\n"
+                . "View in admin: {$adminUrl}\n";
+
+            Mailer::send($notifyEmail, "New contact submission — {$siteName}", $htmlBody, true, $altBody);
         }
 
         // One-time flag rather than a flash message: the confirmation now lives

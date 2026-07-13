@@ -197,9 +197,16 @@ try {
     }
 
     // ----------------------------------------------------------- applications
-    $appCategory = $pdo->prepare('INSERT INTO application_categories (name, slug) VALUES (:name, :slug)');
-    $appCategory->execute(['name' => 'Intelligence', 'slug' => 'intelligence']);
-    $intelligenceCategoryId = (int) $pdo->lastInsertId();
+    // Categories are named for the industry each application serves (not the
+    // generic AI capability) so the /applications tab filter reads as
+    // "Insurance / Banking / Manufacturing / Compliance" — manager-specified
+    // order via sort_order, not alphabetical.
+    $appCategory = $pdo->prepare('INSERT INTO application_categories (name, slug, sort_order) VALUES (:name, :slug, :sort_order)');
+    $appCategoryIds = [];
+    foreach ([['Insurance', 'insurance', 1], ['Banking', 'banking', 2], ['Manufacturing', 'manufacturing', 3], ['Compliance', 'compliance', 4]] as [$name, $slug, $sortOrder]) {
+        $appCategory->execute(['name' => $name, 'slug' => $slug, 'sort_order' => $sortOrder]);
+        $appCategoryIds[$name] = (int) $pdo->lastInsertId();
+    }
 
     $app = $pdo->prepare(
         'INSERT INTO applications (title, slug, category_id, short_description, full_description, image_path, show_on_home, show_on_applications_page, sort_order)
@@ -208,47 +215,48 @@ try {
 
     // The 3 cards from the homepage "Thinking Systems at Work" slider —
     // distinct products from the /applications grid in the source template.
+    // Not shown on the /applications page, so no category tab applies.
     $homeOnly = [
-        ['Banking Intelligence', 'banking-intelligence', 'Intelligence',
+        ['Banking Intelligence', 'banking-intelligence',
             'AI-powered banking intelligence platform that helps organizations analyze customer behavior, risk profiles, operational performance, and business insights through a unified dashboard.',
             'assets/img/home-1/Banking-intelligence.png'],
-        ['Document Intelligence', 'document-intelligence', 'Intelligence',
+        ['Document Intelligence', 'document-intelligence',
             'Automated document extraction, classification, validation and intelligent processing using enterprise AI models.',
             'assets/img/home-1/document-intelligence.png'],
-        ['Enterprise Command Center', 'enterprise-command-center', 'Intelligence',
+        ['Enterprise Command Center', 'enterprise-command-center',
             'Centralized AI operations hub for monitoring enterprise workflows, KPIs, governance and operational intelligence.',
             'assets/img/home-1/enterprise.png'],
     ];
     foreach ($homeOnly as $i => $row) {
         $app->execute([
-            'title' => $row[0], 'slug' => $row[1], 'category_id' => $intelligenceCategoryId,
-            'short_description' => $row[3], 'full_description' => $row[3], 'image_path' => $row[4],
+            'title' => $row[0], 'slug' => $row[1], 'category_id' => null,
+            'short_description' => $row[2], 'full_description' => $row[2], 'image_path' => $row[3],
             'show_on_home' => 1, 'show_on_applications_page' => 0, 'sort_order' => $i + 1,
         ]);
     }
 
     // The 4 cards from the /applications grid in the source template.
     $applicationsOnly = [
-        ['SOX ITGC Intelligence', 'sox-itgc-intelligence', 'Intelligence',
+        ['SOX ITGC Intelligence', 'sox-itgc-intelligence', 'Compliance',
             'SOX ITGC thinking system that continuously monitors 100% of user access across enterprise platforms,',
             'SOX ITGC thinking system that continuously monitors 100% of user access across enterprise platforms, enforcing existing ITGC controls while using AI to discover new toxic combinations, learning from auditor feedback to surface only high-signal alerts. Testing cycles drop from weeks to minutes with 100% population coverage, violations worth millions are caught proactively, and AI-generated emerging controls adapt as your environment evolves.',
             'assets/img/inner-page/SOX ITGC Intelligence.png'],
-        ['Customer 360 intelligence & relationship management', 'customer-360-intelligence-relationship-management', 'Intelligence',
+        ['Customer 360 intelligence & relationship management', 'customer-360-intelligence-relationship-management', 'Banking',
             'Retail banking marketing thinking system that unifies financial data',
             'Retail banking marketing thinking system that unifies financial data, predicted customer lifetime value, life event detection, and behavioral signals into enriched customer 360° profiles with AI-generated personalized product recommendations and campaign-ready creatives, based on latest customer interactions surfacing only high-value opportunities. Relationship managers can now act on the right insight at the right moment without toggling between disparate systems to close any retention gaps using predicted vs. actual CLTV, drive higher conversion rates, reduce churn while expanding customer lifetime value all with full regulatory compliance.',
             'assets/img/inner-page/Banking Marketing Intelligence.png'],
-        ['P&C Claims Intelligence', 'pc-claims-intelligence', 'Intelligence',
+        ['P&C Claims Intelligence', 'pc-claims-intelligence', 'Insurance',
             'Claims intelligence thinking system that unifies policy, claims data, and third-party sources into AI-enriched snapshots',
             'Claims intelligence thinking system with claims summaries and recommended next steps, full process visibility from FNOL till closed claims including loss and claim signals that are available for underwriters and actuaries for improved risk selection. Claims resolved in less than a day instead of weeks, adjudicator insights captured and shared in real-time, reducing loss ratios and preventing millions in leakage while continuously improving underwriting profitability through automated signals.',
             'assets/img/inner-page/P&C Claims Intelligence.png'],
-        ['Supply Chain Intelligence', 'supply-chain-intelligence', 'Intelligence',
+        ['Supply Chain Intelligence', 'supply-chain-intelligence', 'Manufacturing',
             'Inventory management thinking system that unifies ERP, WMS, and supplier portals into real-time inventory visibility',
             'Inventory management thinking system that unifies ERP, WMS, and supplier portals into real-time inventory visibility with AI-driven reorder recommendations, demand forecasting, and what-if scenario analysis showing financial impact with one-click execution to automate actions. Supply chain teams model decisions with cost visibility before executing, release millions in tied-up capital through optimized inventory levels, prevent stockouts with predictive reorder points, and automate workflows from decision to execution in minutes.',
             'assets/img/inner-page/Supply Chain Intelligence.png'],
     ];
     foreach ($applicationsOnly as $i => $row) {
         $app->execute([
-            'title' => $row[0], 'slug' => $row[1], 'category_id' => $intelligenceCategoryId,
+            'title' => $row[0], 'slug' => $row[1], 'category_id' => $appCategoryIds[$row[2]],
             'short_description' => $row[3], 'full_description' => $row[4], 'image_path' => $row[5],
             'show_on_home' => 0, 'show_on_applications_page' => 1, 'sort_order' => $i + 1,
         ]);
@@ -337,6 +345,7 @@ BODY;
     $setting->execute(['key' => 'default_og_image', 'value' => '']);
     $setting->execute(['key' => 'google_site_verification', 'value' => '']);
     $setting->execute(['key' => 'ga_measurement_id', 'value' => '']);
+    $setting->execute(['key' => 'blog_enabled', 'value' => '0']);
 
     // --------------------------------------------------------------- admin user
     $email = 'abhishek@ezrankings.com';

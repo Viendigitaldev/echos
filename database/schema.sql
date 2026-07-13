@@ -53,6 +53,7 @@ CREATE TABLE application_categories (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     slug VARCHAR(100) NOT NULL,
+    sort_order INT UNSIGNED NOT NULL DEFAULT 0,
     UNIQUE KEY uq_application_categories_slug (slug)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

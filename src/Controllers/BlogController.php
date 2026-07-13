@@ -19,6 +19,11 @@ final class BlogController
 {
     public function index(Request $request): void
     {
+        if (Setting::get('blog_enabled', '0') !== '1') {
+            Router::renderNotFound($request->path());
+            return;
+        }
+
         AssetManager::enableBlogFilter();
 
         $page = Page::findBySlug('perspectives');
@@ -41,6 +46,11 @@ final class BlogController
 
     public function show(Request $request, string $slug): void
     {
+        if (Setting::get('blog_enabled', '0') !== '1') {
+            Router::renderNotFound($request->path());
+            return;
+        }
+
         $post = BlogPost::findPublishedBySlug($slug);
 
         if ($post === null) {

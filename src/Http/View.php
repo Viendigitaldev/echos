@@ -24,6 +24,17 @@ final class View
     }
 
     /**
+     * Renders a view with no layout wrapper and returns the markup instead
+     * of echoing it — used for email bodies, which aren't a page response.
+     *
+     * @param array<string, mixed> $data
+     */
+    public function renderToString(string $view, array $data = []): string
+    {
+        return $this->capture($view, $data);
+    }
+
+    /**
      * @param array<string, mixed> $data
      */
     private function capture(string $view, array $data): string

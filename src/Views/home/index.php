@@ -7,6 +7,7 @@
  */
 
 use App\Models\Media;
+use App\Models\Setting;
 $hero = $blocks['hero'];
 $aboutTeaser = $blocks['about_teaser'];
 $partnerElite = $blocks['partner_elite'];
@@ -14,6 +15,7 @@ $thinkingSystems = $blocks['thinking_systems'];
 $industriesBlock = $blocks['industries'];
 $media = $blocks['media'];
 $perspectives = $blocks['perspectives_teaser'];
+$blogEnabled = Setting::get('blog_enabled', '0') === '1';
 ?>
             <div id="smooth-wrapper">
                 <div id="smooth-content">
@@ -316,6 +318,7 @@ $perspectives = $blocks['perspectives_teaser'];
 </section>
 
 
+                    <?php if ($blogEnabled): ?>
                     <!-- News Section Start -->
                     <section class="news-section fix section-padding section-bg oit-panel-pin-area">
                         <div class="container">
@@ -374,6 +377,7 @@ $perspectives = $blocks['perspectives_teaser'];
                             <?php endforeach; ?>
                         </div>
                     </section>
+                    <?php endif; ?>
 
                 <?php require __DIR__ . '/../partials/footer.php'; ?>
                 </div>
