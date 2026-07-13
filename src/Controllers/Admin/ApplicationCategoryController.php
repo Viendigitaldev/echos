@@ -41,6 +41,7 @@ final class ApplicationCategoryController extends AdminController
         ApplicationCategory::insert([
             'name' => $name,
             'slug' => SlugService::unique('application_categories', 'slug', $name),
+            'sort_order' => (int) $request->input('sort_order', 0),
         ]);
 
         $this->flash('success', 'Category created.');
@@ -57,7 +58,7 @@ final class ApplicationCategoryController extends AdminController
         }
 
         $name = $request->trimmedInput('name');
-        $data = ['name' => $name];
+        $data = ['name' => $name, 'sort_order' => (int) $request->input('sort_order', 0)];
         if ($name !== $item['name']) {
             $data['slug'] = SlugService::unique('application_categories', 'slug', $name, (int) $id);
         }

@@ -36,9 +36,12 @@ final class MenuItem extends Model
     /** @return array<int, array<string, mixed>> */
     private static function byLocation(string $location): array
     {
+        $blogEnabled = Setting::get('blog_enabled', '0') === '1';
+
         return array_values(array_filter(
             static::allCached(),
             static fn (array $item): bool => $item['location'] === $location
+                && ($blogEnabled || $item['url'] !== '/perspectives')
         ));
     }
 

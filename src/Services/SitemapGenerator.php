@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Database\Connection;
+use App\Models\Setting;
 use App\Support\Url;
 
 final class SitemapGenerator
@@ -17,7 +18,12 @@ final class SitemapGenerator
 
         $urls[] = ['loc' => Url::absolute('/'), 'priority' => '1.0'];
 
-        $pageSlugs = ['about' => '0.8', 'applications' => '0.8', 'perspectives' => '0.6', 'contact' => '0.5'];
+        $blogEnabled = Setting::get('blog_enabled', '0') === '1';
+
+        $pageSlugs = ['about' => '0.8', 'applications' => '0.8', 'contact' => '0.5'];
+        if ($blogEnabled) {
+            $pageSlugs['perspectives'] = '0.6';
+        }
         foreach ($pageSlugs as $slug => $priority) {
             $urls[] = ['loc' => Url::absolute('/' . $slug), 'priority' => $priority];
         }
@@ -26,9 +32,11 @@ final class SitemapGenerator
         // page (no unique server-rendered URL per item), so they are not
         // listed separately here — that page already covers the content.
 
-        $stmt = Connection::get()->query("SELECT slug, updated_at FROM blog_posts WHERE status = 'published'");
-        foreach ($stmt->fetchAll() as $row) {
-            $urls[] = ['loc' => Url::absolute('/perspectives/' . $row['slug']), 'priority' => '0.6', 'lastmod' => $row['updated_at']];
+        if ($blogEnabled) {
+            $stmt = Connection::get()->query("SELECT slug, updated_at FROM blog_posts WHERE status = 'published'");
+            foreach ($stmt->fetchAll() as $row) {
+                $urls[] = ['loc' => Url::absolute('/perspectives/' . $row['slug']), 'priority' => '0.6', 'lastmod' => $row['updated_at']];
+            }
         }
 
         $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"/>');

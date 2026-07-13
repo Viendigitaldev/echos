@@ -27,6 +27,11 @@
         require __DIR__ . '/../partials/media-field.php';
         ?>
 
+        <div class="form-group checkbox-group">
+            <label><input type="checkbox" name="blog_enabled" value="1" <?= $values['blog_enabled'] ? 'checked' : '' ?>> Show Perspectives (Blog) on the site</label>
+            <div class="hint">Unchecked hides the Perspectives nav links, the homepage teaser, and the /perspectives pages (they 404) — nothing is deleted, so re-enable anytime.</div>
+        </div>
+
         <div class="form-row">
             <div class="form-group">
                 <label for="contact_phone">Contact phone</label>

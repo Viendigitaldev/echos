@@ -163,7 +163,7 @@ h2 {
 @media (max-width: 470px) {
   h2 {
     font-size: 32px;
-line-height: 45px;
+    line-height: 117%;
   }
 }
 

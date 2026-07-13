@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 final class Mailer
 {
-    public static function send(string $to, string $subject, string $body): bool
+    public static function send(string $to, string $subject, string $body, bool $isHtml = false, ?string $altBody = null): bool
     {
         $host = Setting::get('mail_host');
         $username = Setting::get('mail_username');
@@ -40,8 +40,11 @@ final class Mailer
             $mail->setFrom($fromAddress, $fromName);
             $mail->addAddress($to);
             $mail->Subject = $subject;
-            $mail->isHTML(false);
+            $mail->isHTML($isHtml);
             $mail->Body = $body;
+            if ($isHtml && $altBody !== null) {
+                $mail->AltBody = $altBody;
+            }
 
             $mail->send();
             return true;

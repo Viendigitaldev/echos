@@ -26,6 +26,8 @@ final class HomeController
         AssetManager::enableRevealText();
         AssetManager::enableAppModal();
 
+        $blogEnabled = Setting::get('blog_enabled', '0') === '1';
+
         (new View())->render('home/index', [
             'title' => $seo['title'],
             'metaDescription' => $seo['description'],
@@ -33,7 +35,7 @@ final class HomeController
             'blocks' => $blocks,
             'featured' => ApplicationItem::forHomeSlider(),
             'industries' => Industry::published(),
-            'latestPosts' => BlogPost::latestPublished(2),
+            'latestPosts' => $blogEnabled ? BlogPost::latestPublished(2) : [],
         ]);
     }
 }

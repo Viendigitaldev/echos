@@ -7,10 +7,11 @@
 
 <div class="admin-card">
     <table class="admin-table">
-        <thead><tr><th>Name</th><th>Slug</th><th>Published applications</th><th></th></tr></thead>
+        <thead><tr><th>Sort</th><th>Name</th><th>Slug</th><th>Published applications</th><th></th></tr></thead>
         <tbody>
         <?php foreach ($items as $item): ?>
         <tr>
+            <td><?= (int) $item['sort_order'] ?></td>
             <td><?= e($item['name']) ?></td>
             <td><code><?= e($item['slug']) ?></code></td>
             <td><?= (int) $item['application_count'] ?></td>
@@ -24,7 +25,7 @@
         </tr>
         <?php endforeach; ?>
         <?php if ($items === []): ?>
-        <tr><td colspan="4" class="muted">No categories yet.</td></tr>
+        <tr><td colspan="5" class="muted">No categories yet.</td></tr>
         <?php endif; ?>
         </tbody>
     </table>

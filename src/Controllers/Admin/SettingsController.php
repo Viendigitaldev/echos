@@ -31,6 +31,7 @@ final class SettingsController extends AdminController
             $values[$key] = Setting::get($key);
         }
         $values['mail_password_set'] = Setting::get('mail_password') !== '';
+        $values['blog_enabled'] = Setting::get('blog_enabled', '0') === '1';
 
         $this->render('admin/settings/index', [
             'pageTitle' => 'Settings',
@@ -54,6 +55,8 @@ final class SettingsController extends AdminController
         if ($mailPassword !== '') {
             Setting::set('mail_password', $mailPassword);
         }
+
+        Setting::set('blog_enabled', $request->input('blog_enabled') ? '1' : '0');
 
         foreach (self::IMAGE_KEYS as $key) {
             try {
