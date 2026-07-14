@@ -14884,6 +14884,21 @@ textarea::placeholder {
   color: #101010;
 }
 
+@media (max-width: 767px) {
+  /* Client request: LinkedIn icon sits beside the name (with a gap) on
+     mobile instead of on its own line below the bio. Desktop keeps its
+     existing stacked layout untouched. */
+  .leader-name-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 25px;
+  }
+  .leader-name-row h3 {
+    margin-bottom: 0;
+  }
+}
+
 @media (max-width: 991px) {
   .leader-row,
   .leader-row.reverse {

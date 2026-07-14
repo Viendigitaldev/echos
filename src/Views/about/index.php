@@ -191,17 +191,18 @@ $letsDeal = $blocks['lets_deal'];
                      <?= e($member['designation']) ?>
                  </span>
 
-                 <h3><?= e($member['name']) ?></h3>
+                 <div class="leader-name-row">
+                     <h3><?= e($member['name']) ?></h3>
+
+                     <a href="<?= e($member['linkedin_url']) ?>" class="linkedin-btn">
+                         <i class="fab fa-linkedin-in"></i>
+                     </a>
+                 </div>
 
                  <p>
                     <?= e($member['bio']) ?>
 
                  </p>
-
-                 <a href="<?= e($member['linkedin_url']) ?>" class="linkedin-btn">
-
-                     <i class="fab fa-linkedin-in"></i>
-                 </a>
 
              </div>
 
