@@ -14618,6 +14618,13 @@ display: none;
   white-space: pre-line;
 }
 
+/* Client request: "Problem" / "Impact" labels stand out in white against
+   the muted body text — wrapped by renderModalDescription() in app-modal.js. */
+.app-modal-body p strong.modal-label {
+  color: #fff;
+  font-weight: 700;
+}
+
 .app-modal-close {
   position: absolute;
   right: 15px;
@@ -14884,15 +14891,12 @@ textarea::placeholder {
   color: #101010;
 }
 
-/* Client request: LinkedIn icon sits on the same line as the name, aligned
-   with the right edge of the bio text below it (not the full column width,
-   which runs wider than the 650px-capped paragraph) — desktop and mobile. */
+/* Client request: LinkedIn icon sits on the same line as the name, close
+   beside it (not pushed to the far edge) — desktop and mobile alike. */
 .leader-name-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
-  max-width: 650px;
   margin-bottom: 25px;
 }
 .leader-name-row h3 {
