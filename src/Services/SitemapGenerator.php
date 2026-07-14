@@ -32,6 +32,11 @@ final class SitemapGenerator
         // page (no unique server-rendered URL per item), so they are not
         // listed separately here — that page already covers the content.
 
+        $stmt = Connection::get()->query('SELECT slug, updated_at FROM pages WHERE is_custom = 1');
+        foreach ($stmt->fetchAll() as $row) {
+            $urls[] = ['loc' => Url::absolute('/' . $row['slug']), 'priority' => '0.6', 'lastmod' => $row['updated_at']];
+        }
+
         if ($blogEnabled) {
             $stmt = Connection::get()->query("SELECT slug, updated_at FROM blog_posts WHERE status = 'published'");
             foreach ($stmt->fetchAll() as $row) {

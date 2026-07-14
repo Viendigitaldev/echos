@@ -4,16 +4,25 @@
  * @var array<string, array<string, mixed>> $blocks
  */
 
-// Only the legal pages render their block body as raw HTML on the front
-// end (src/Views/legal/show.php) — every other page's blocks are rendered
-// as escaped plain text, so a rich editor there would be misleading.
+// Only the legal pages and admin-created custom pages render their block
+// body as raw HTML on the front end (src/Views/legal/show.php) — every
+// other page's blocks are rendered as escaped plain text, so a rich
+// editor there would be misleading.
 $richTextPages = ['terms-of-service', 'privacy-policy'];
-$hasRichEditor = in_array($page['slug'], $richTextPages, true);
+$hasRichEditor = !empty($page['is_custom']) || in_array($page['slug'], $richTextPages, true);
+$isCustomPage = !empty($page['is_custom']);
 ?>
 <div class="admin-card">
     <h3 class="mt-0">Page SEO</h3>
     <form action="<?= e(url('/admin/pages/' . $page['slug'])) ?>" method="post" enctype="multipart/form-data" id="page-form">
         <?= csrf_field() ?>
+        <?php if ($isCustomPage): ?>
+        <div class="form-group">
+            <label for="slug">URL slug</label>
+            <input type="text" id="slug" name="slug" value="<?= e($page['slug']) ?>">
+            <div class="hint">Changing this changes the page's live URL (<?= e(url('/' . $page['slug'])) ?>) — no redirect is created from the old address.</div>
+        </div>
+        <?php endif; ?>
         <div class="form-row">
             <div class="form-group">
                 <label for="seo_title">SEO title</label>
@@ -80,6 +89,16 @@ $hasRichEditor = in_array($page['slug'], $richTextPages, true);
     </form>
 </div>
 <?php endforeach; ?>
+
+<?php if ($isCustomPage): ?>
+<div class="admin-card">
+    <h3 class="mt-0">Danger zone</h3>
+    <form action="<?= e(url('/admin/pages/' . $page['slug'] . '/delete')) ?>" method="post" onsubmit="return confirm('Delete this page? This cannot be undone.');">
+        <?= csrf_field() ?>
+        <button type="submit" class="btn btn-danger">Delete this page</button>
+    </form>
+</div>
+<?php endif; ?>
 
 <?php if ($hasRichEditor): ?>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css">

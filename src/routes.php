@@ -22,6 +22,7 @@ use App\Controllers\Admin\TeamMemberController;
 use App\Controllers\ApplicationController;
 use App\Controllers\BlogController;
 use App\Controllers\ContactController;
+use App\Controllers\CustomPageController;
 use App\Controllers\HomeController;
 use App\Controllers\LegalController;
 
@@ -51,8 +52,11 @@ $router->get('/admin', [DashboardController::class, 'index']);
 
 // ------------------------------------------------------------------ pages/blocks
 $router->get('/admin/pages', [PageController::class, 'index']);
+$router->get('/admin/pages/create', [PageController::class, 'create']);
+$router->post('/admin/pages', [PageController::class, 'store']);
 $router->get('/admin/pages/{slug}/edit', [PageController::class, 'edit']);
 $router->post('/admin/pages/{slug}', [PageController::class, 'update']);
+$router->post('/admin/pages/{slug}/delete', [PageController::class, 'delete']);
 
 // ---------------------------------------------------------------- applications
 $router->get('/admin/applications', [ApplicationAdminController::class, 'index']);
@@ -134,3 +138,10 @@ $router->post('/admin/settings', [SettingsController::class, 'update']);
 $router->get('/admin/seo', [SeoController::class, 'index']);
 $router->post('/admin/seo/robots', [SeoController::class, 'saveRobots']);
 $router->post('/admin/seo/sitemap/regenerate', [SeoController::class, 'regenerateSitemap']);
+
+// ---------------------------------------------------------------- custom pages
+// Catch-all for admin-created custom pages (see Admin\PageController::store()).
+// Registered last so it only ever matches a path no route above already
+// claimed — every fixed single-segment path (/about, /contact, ...) is
+// matched by its own explicit route first.
+$router->get('/{slug}', [CustomPageController::class, 'show']);
