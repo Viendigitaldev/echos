@@ -1636,11 +1636,11 @@ span {
   }
 }
 .mobile-menu-area .mobile-menu-main .logo {
-  padding: 30px;
+  padding: 20px;
 }
 .mobile-menu-area .mobile-menu-main .close-mobile-menu {
   position: absolute;
-  top: 34px;
+  top: 20px;
   right: 10px;
 }
 .mobile-menu-area .mobile-menu-main .close-mobile-menu i {
