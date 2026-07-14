@@ -39,7 +39,9 @@ $letsDeal = $blocks['lets_deal'];
  </section>
 
 
- <section class="bgimg"></section>
+ <section class="bgimg fix">
+     <img src="<?= e(asset('img/home-1/video-banner.jpg')) ?>" alt="">
+ </section>
 
                      <section class="mindset-section">
      <div class="container">

@@ -1638,11 +1638,6 @@ span {
 .mobile-menu-area .mobile-menu-main .logo {
   padding: 30px;
 }
-@media (max-width: 470px) {
-  .mobile-menu-area .mobile-menu-main .logo img {
-    width: 130px;
-  }
-}
 .mobile-menu-area .mobile-menu-main .close-mobile-menu {
   position: absolute;
   top: 34px;
@@ -12992,6 +12987,7 @@ a.navbar-brand img {
   line-height: 1.9;
   margin: 0;
   font-size: 16px;
+  white-space: pre-line;
 }
 
 .app-modal-close {
@@ -13541,6 +13537,17 @@ gap: 0px;
   .elite-content h2 {
     font-size: 36px;
 line-height: 46px;
+  }
+  /* Match "The People behind Echos" to "Our Ecosystem" on mobile only —
+     its own rule elsewhere still wins at the wider <=991px tablet range. */
+  .leadership-section .section-heading h2 {
+    font-size: 36px;
+    line-height: 46px;
+  }
+  /* Desktop's 100px heading-to-content gap (.section-heading margin-bottom)
+     is disproportionate on narrow phones — tighten it on mobile only. */
+  .leadership-section .section-heading {
+    margin-bottom: 40px;
   }
 .about-wrapper-2 .section-title-area{
 padding-bottom:20px;
@@ -14608,6 +14615,7 @@ display: none;
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.8;
   font-size: 16px;
+  white-space: pre-line;
 }
 
 .app-modal-close {
@@ -15334,12 +15342,20 @@ section.builders-section {
 }
 
 .bgimg {
-  background-image: url(../img/home-1/video-banner.jpg);
-  background-size: cover;
   height: 400px;
-  background-position: center;
-  background-attachment: fixed;
+  position: relative;
+  overflow: hidden;
   filter: grayscale(1);
+}
+.bgimg img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  object-fit: cover;
+  display: block;
+  will-change: transform;
 }
 
 .about-content {

@@ -788,6 +788,29 @@ if (typeof Swiper !== "undefined" && $(".industries-swiper").length > 0) {
                 normalizeScroll: false,
                 ignoreMobileResize: true
             });
+
+            // The About page's .bgimg is designed as a fixed-background parallax
+            // (image appears anchored while the copy scrolls over it). Native
+            // `background-attachment: fixed` can't do this inside ScrollSmoother's
+            // transformed #smooth-content, so instead the image is oversized
+            // (120% tall, overflow-hidden parent) and its vertical position is
+            // scrubbed as the section passes through the viewport — the visible
+            // slice shifts, giving the same anchored-backdrop reveal.
+            if ($(".bgimg img").length) {
+                gsap.fromTo(".bgimg img",
+                    { yPercent: -16 },
+                    {
+                        yPercent: 0,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: ".bgimg",
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true
+                        }
+                    }
+                );
+            }
         }
 
         gsap.registerPlugin(ScrollTrigger);
