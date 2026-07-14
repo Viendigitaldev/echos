@@ -25,6 +25,7 @@ CREATE TABLE admin_users (
 CREATE TABLE pages (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     slug VARCHAR(100) NOT NULL,
+    is_custom TINYINT(1) NOT NULL DEFAULT 0,
     seo_title VARCHAR(255) NULL,
     seo_description VARCHAR(500) NULL,
     og_image VARCHAR(255) NULL,

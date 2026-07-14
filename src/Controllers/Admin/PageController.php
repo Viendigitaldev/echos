@@ -8,6 +8,7 @@ use App\Http\Request;
 use App\Models\Page;
 use App\Models\PageBlock;
 use App\Services\SitemapGenerator;
+use App\Services\SlugService;
 
 final class PageController extends AdminController
 {
@@ -17,6 +18,46 @@ final class PageController extends AdminController
             'pageTitle' => 'Pages & Sections',
             'items' => Page::all('slug ASC'),
         ]);
+    }
+
+    public function create(Request $request): void
+    {
+        $this->render('admin/pages/create', [
+            'pageTitle' => 'New Page',
+        ]);
+    }
+
+    public function store(Request $request): void
+    {
+        $this->requireCsrf($request);
+
+        $title = $request->trimmedInput('title');
+        if ($title === '') {
+            $this->flash('error', 'Page title is required.');
+            redirect('/admin/pages/create');
+        }
+
+        $slug = SlugService::unique('pages', 'slug', $title);
+
+        $pageId = Page::insert([
+            'slug' => $slug,
+            'is_custom' => 1,
+            'seo_title' => $title,
+            'seo_description' => '',
+        ]);
+
+        PageBlock::insert([
+            'page_id' => $pageId,
+            'block_key' => 'content',
+            'heading' => $title,
+            'subheading' => null,
+            'body' => '',
+            'sort_order' => 0,
+        ]);
+
+        SitemapGenerator::regenerate();
+        $this->flash('success', 'Page created — add its content below.');
+        redirect('/admin/pages/' . $slug . '/edit');
     }
 
     public function edit(Request $request, string $slug): void
@@ -34,6 +75,27 @@ final class PageController extends AdminController
         ]);
     }
 
+    public function delete(Request $request, string $slug): void
+    {
+        $this->requireCsrf($request);
+
+        $page = Page::findBySlug($slug);
+        if ($page === null) {
+            $this->flash('error', 'Page not found.');
+            redirect('/admin/pages');
+        }
+
+        if ((int) $page['is_custom'] !== 1) {
+            $this->flash('error', 'This page is part of the site structure and cannot be deleted.');
+            redirect('/admin/pages');
+        }
+
+        Page::delete((int) $page['id']);
+        SitemapGenerator::regenerate();
+        $this->flash('success', 'Page deleted.');
+        redirect('/admin/pages');
+    }
+
     public function update(Request $request, string $slug): void
     {
         $this->requireCsrf($request);
@@ -44,10 +106,23 @@ final class PageController extends AdminController
             redirect('/admin/pages');
         }
 
-        Page::update((int) $page['id'], [
+        $data = [
             'seo_title' => $request->trimmedInput('seo_title'),
             'seo_description' => $request->trimmedInput('seo_description'),
-        ]);
+        ];
+
+        // Only custom pages may have their slug changed — the 8 structural
+        // pages have theirs hardwired into routes.php/controllers, so
+        // editing it here would just 404 the page.
+        if ((int) $page['is_custom'] === 1) {
+            $newSlug = SlugService::slugify($request->trimmedInput('slug'));
+            if ($newSlug !== '' && $newSlug !== $slug) {
+                $data['slug'] = SlugService::unique('pages', 'slug', $newSlug, (int) $page['id']);
+            }
+        }
+
+        Page::update((int) $page['id'], $data);
+        $slug = $data['slug'] ?? $slug;
 
         $blocks = $request->input('blocks', []);
         $files = $_FILES['blocks'] ?? [];
