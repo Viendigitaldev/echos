@@ -27,7 +27,7 @@ $letsDeal = $blocks['lets_deal'];
 
              <div class="vision-content">
 
-                 <p class="wow fadeInUp" data-wow-delay=".3s">
+                 <p class="wow slow-para fadeInUp" data-wow-delay=".3s">
                      <?= e($vision['body']) ?>
                  </p>
              </div>
