@@ -513,3 +513,7 @@
 .industries-pagination .swiper-pagination-bullet-active {
   background-color: var(--theme) !important;
 }
+.slow-para {
+    animation-duration: 2.2s !important;
+    -webkit-animation-duration: 2.2s !important;
+}
