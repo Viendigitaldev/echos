@@ -56,7 +56,18 @@ final class UploadService
             throw new \RuntimeException('Could not create upload directory.');
         }
 
-        $filename = bin2hex(random_bytes(16)) . '.' . $extension;
+        $baseSlug = SlugService::slugify(pathinfo((string) ($file['name'] ?? ''), PATHINFO_FILENAME));
+        if ($baseSlug === '') {
+            $baseSlug = 'image';
+        }
+
+        $filename = $baseSlug . '.' . $extension;
+        $suffix = 2;
+        while (file_exists($absoluteDir . '/' . $filename)) {
+            $filename = $baseSlug . '-' . $suffix . '.' . $extension;
+            $suffix++;
+        }
+
         $destination = $absoluteDir . '/' . $filename;
 
         if (!move_uploaded_file($file['tmp_name'], $destination)) {
