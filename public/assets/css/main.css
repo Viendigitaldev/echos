@@ -162,7 +162,7 @@ h2 {
 }
 @media (max-width: 470px) {
   h2 {
-    font-size: 32px;
+    font-size: 36px;
     line-height: 117%;
   }
 }
@@ -13839,7 +13839,7 @@ margin-bottom: 0px !important;
 
 @media (max-width: 768px) {
   .locations-left h2 {
-    font-size: 42px;
+    font-size: 40px;
     margin-bottom: 0px;
   }
   .locations-left {
@@ -14068,7 +14068,7 @@ select {
 
 @media (max-width: 576px) {
   .contact-content h2 {
-    font-size: 30px;
+    font-size: 36px;
     line-height: 40px;
   }
 
@@ -14353,7 +14353,7 @@ display: none;
   }
 
   .media-content h2 {
-    font-size: 32px;
+    font-size: 36px;
   }
 
   .media-content p {
@@ -15337,7 +15337,7 @@ section.outcome-section1 .vision-content {
   }
 
   .builders-content h2 {
-    font-size: 34px;
+    font-size: 36px;
   }
 
   .builders-content p {
