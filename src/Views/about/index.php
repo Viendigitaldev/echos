@@ -22,7 +22,7 @@ $letsDeal = $blocks['lets_deal'];
          <div class="section-header">
 
              <h2 class="wa_title_spilt_1">
-                 <?= e($vision['heading']) ?>
+                 <?= nl2br(e($vision['heading'])) ?>
              </h2>
 
              <div class="vision-content">
@@ -95,7 +95,7 @@ $letsDeal = $blocks['lets_deal'];
              <div class="builders-content">
 
     <h2 class="wa_title_spilt_1">
-                                 <?= e($builders['heading']) ?>
+                                 <?= nl2br(e($builders['heading'])) ?>
                                      </h2>
 
 
@@ -121,7 +121,7 @@ $letsDeal = $blocks['lets_deal'];
               <div class="section-title">
 
                                      <h2 class="wa_title_spilt_1">
-                                        <?= e($ecosystem['heading']) ?>
+                                        <?= nl2br(e($ecosystem['heading'])) ?>
                                      </h2>
                   <p class="small-content">
                     <?= e($ecosystem['body']) ?>
@@ -173,7 +173,7 @@ $letsDeal = $blocks['lets_deal'];
      <div class="container">
 
          <div class="section-heading">
-             <h2 class="wa_title_spilt_1"><?= e($leadership['heading']) ?></h2>
+             <h2 class="wa_title_spilt_1"><?= nl2br(e($leadership['heading'])) ?></h2>
          </div>
 
          <?php foreach ($team as $i => $member): ?>

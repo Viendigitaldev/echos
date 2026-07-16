@@ -17,9 +17,9 @@ use App\Models\Media;
                             <div class="page-heading">
                               <div class="breadcrumb-sub-title">
                                      <h1 class="title wa_title_spilt_1">
-                                       <?= e($breadcrumb['heading']) ?>
+                                       <?= nl2br(e($breadcrumb['heading'])) ?>
                                     </h1>
-                                     <h2 class="wa_title_spilt_1"><?= e($breadcrumb['subheading']) ?>
+                                     <h2 class="wa_title_spilt_1"><?= nl2br(e($breadcrumb['subheading'])) ?>
                                     </h2>
                                 </div>
 

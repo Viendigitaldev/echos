@@ -47,12 +47,14 @@ $isCustomPage = !empty($page['is_custom']);
 
         <div class="form-group">
             <label>Heading</label>
-            <input type="text" name="blocks[<?= e($key) ?>][heading]" value="<?= e($block['heading'] ?? '') ?>">
+            <textarea name="blocks[<?= e($key) ?>][heading]" rows="2"><?= e($block['heading'] ?? '') ?></textarea>
+            <div class="hint">Press Enter for a line break in the heading — it will render as one.</div>
         </div>
         <?php if ($block['subheading'] !== null): ?>
         <div class="form-group">
             <label>Subheading</label>
-            <input type="text" name="blocks[<?= e($key) ?>][subheading]" value="<?= e($block['subheading'] ?? '') ?>">
+            <textarea name="blocks[<?= e($key) ?>][subheading]" rows="2"><?= e($block['subheading'] ?? '') ?></textarea>
+            <div class="hint">Press Enter for a line break in the subheading — it will render as one.</div>
         </div>
         <?php endif; ?>
         <?php if ($block['body'] !== null): ?>
