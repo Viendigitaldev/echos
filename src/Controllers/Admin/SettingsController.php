@@ -12,7 +12,7 @@ final class SettingsController extends AdminController
     private const TEXT_KEYS = [
         'site_name', 'site_tagline', 'contact_phone', 'contact_address',
         'footer_copyright', 'social_x_url', 'social_linkedin_url', 'contact_notify_email',
-        'google_site_verification', 'ga_measurement_id',
+        'google_site_verification', 'ga_measurement_id', 'gtm_container_id',
     ];
 
     private const IMAGE_KEYS = ['site_logo', 'default_og_image'];
