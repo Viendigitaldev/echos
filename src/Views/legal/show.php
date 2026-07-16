@@ -11,10 +11,10 @@
                             <div class="page-heading">
                               <div class="breadcrumb-sub-title">
                                      <h1 class="title wa_title_spilt_1">
-                                       <?= e($block['heading']) ?>
+                                       <?= nl2br(e($block['heading'])) ?>
                                     </h1>
                                     <?php if (!empty($block['subheading'])): ?>
-                                     <h2 class="wa_title_spilt_1"><?= e($block['subheading']) ?>
+                                     <h2 class="wa_title_spilt_1"><?= nl2br(e($block['subheading'])) ?>
                                     </h2>
                                     <?php endif; ?>
                                 </div>

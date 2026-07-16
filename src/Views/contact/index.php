@@ -126,7 +126,7 @@
                          <div class="locations-left">
                                  <div class="section-title">
                                      <h2 class="wa_title_spilt_1">
-                                   <?= e($locationsHeading['heading']) ?>
+                                   <?= nl2br(e($locationsHeading['heading'])) ?>
                                      </h2>
                                  </div>
 

@@ -31,7 +31,7 @@ $blogEnabled = Setting::get('blog_enabled', '0') === '1';
                                 <div class="hero-content">
 
                                     <h1 class="wa_title_spilt_1">
-                                      <?= e($hero['heading']) ?>
+                                      <?= nl2br(e($hero['heading'])) ?>
                                     </h1>
                                     <div class="hero-circle-mobile">
                                         <img src="<?= e(asset('img/home-1/hero-circle.png')) ?>" alt="img">
@@ -162,7 +162,7 @@ $blogEnabled = Setting::get('blog_enabled', '0') === '1';
                             <div class="section-title-area">
                                 <div class="section-title">
                               <h2 class="wa_title_spilt_1">
-                                  <?= e($thinkingSystems['heading']) ?>
+                                  <?= nl2br(e($thinkingSystems['heading'])) ?>
                                     </h2>
                                 </div>
                                 <div class="array-button wow fadeInUp" data-wow-delay=".3s">
@@ -287,7 +287,7 @@ $blogEnabled = Setting::get('blog_enabled', '0') === '1';
 
             <!-- Right Content -->
             <div class="media-content">
-                <h2 class="wa_title_spilt_1"><?= e($media['heading']) ?></h2>
+                <h2 class="wa_title_spilt_1"><?= nl2br(e($media['heading'])) ?></h2>
                 <div class="media-image-mobile">
 <img src="<?= e(asset('img/inner-page/media2.jpg')) ?>" alt="In The Media">
 </div>
@@ -336,7 +336,7 @@ $blogEnabled = Setting::get('blog_enabled', '0') === '1';
                                 </div>
                                 <div class="section-title">
                                     <h2 class="wa_title_spilt_1">
-                                       <?= e($perspectives['heading']) ?>
+                                       <?= nl2br(e($perspectives['heading'])) ?>
                                     </h2>
                                 </div>
                             </div>
