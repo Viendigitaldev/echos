@@ -100,6 +100,17 @@ final class AssetManager
         self::script('analytics', 'js/analytics.js', false, ['data-ga-id' => $measurementId, 'defer' => 'defer']);
     }
 
+    /**
+     * Registers GTM without any inline <script> — gtm.js reads the
+     * container ID from its own data attribute instead of an embedded
+     * init block. The <noscript> fallback iframe is rendered separately
+     * in layouts/main.php since AssetManager only manages <link>/<script>.
+     */
+    public static function enableTagManager(string $containerId): void
+    {
+        self::script('gtm', 'js/gtm.js', false, ['data-gtm-id' => $containerId, 'defer' => 'defer']);
+    }
+
     public static function renderStyles(): string
     {
         $html = '';

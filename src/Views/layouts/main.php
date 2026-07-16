@@ -22,6 +22,11 @@ if ($gaMeasurementId !== '') {
     AssetManager::enableAnalytics($gaMeasurementId);
 }
 
+$gtmContainerId = Setting::get('gtm_container_id');
+if ($gtmContainerId !== '') {
+    AssetManager::enableTagManager($gtmContainerId);
+}
+
 $googleSiteVerification = Setting::get('google_site_verification');
 ?>
  <!DOCTYPE html>
@@ -53,6 +58,10 @@ $googleSiteVerification = Setting::get('google_site_verification');
         <?= JsonLd::render(array_merge([JsonLd::organization()], $jsonLd ?? [])) ?>
     </head>
     <body>
+
+        <?php if ($gtmContainerId !== ''): ?>
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?= e($gtmContainerId) ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <?php endif; ?>
 
         <div class="page-wrapper">
             <!-- ================= PRELOADER ================= -->

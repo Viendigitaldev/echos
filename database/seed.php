@@ -345,6 +345,7 @@ BODY;
     $setting->execute(['key' => 'default_og_image', 'value' => '']);
     $setting->execute(['key' => 'google_site_verification', 'value' => '']);
     $setting->execute(['key' => 'ga_measurement_id', 'value' => '']);
+    $setting->execute(['key' => 'gtm_container_id', 'value' => '']);
     $setting->execute(['key' => 'blog_enabled', 'value' => '0']);
 
     // --------------------------------------------------------------- admin user

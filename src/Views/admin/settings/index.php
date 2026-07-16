@@ -84,6 +84,11 @@
                 <input type="text" id="ga_measurement_id" name="ga_measurement_id" value="<?= e($values['ga_measurement_id']) ?>" placeholder="G-XXXXXXXXXX">
                 <div class="hint">Leave empty to skip loading Google Analytics entirely.</div>
             </div>
+            <div class="form-group">
+                <label for="gtm_container_id">Google Tag Manager container ID</label>
+                <input type="text" id="gtm_container_id" name="gtm_container_id" value="<?= e($values['gtm_container_id']) ?>" placeholder="GTM-XXXXXXX">
+                <div class="hint">Leave empty to skip loading Google Tag Manager entirely.</div>
+            </div>
         </div>
 
         <h3>Email (SMTP)</h3>
