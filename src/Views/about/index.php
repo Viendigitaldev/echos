@@ -194,7 +194,7 @@ $letsDeal = $blocks['lets_deal'];
                  <div class="leader-name-row">
                      <h3><?= e($member['name']) ?></h3>
 
-                     <a href="<?= e($member['linkedin_url']) ?>" class="linkedin-btn">
+                     <a href="<?= e($member['linkedin_url']) ?>" class="linkedin-btn" target="_blank" rel="noopener noreferrer">
                          <i class="fab fa-linkedin-in"></i>
                      </a>
                  </div>

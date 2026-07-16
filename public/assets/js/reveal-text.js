@@ -12,13 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     gsap.to(".reveal-text .word", {
         opacity: 1,
-        stagger: 0.30,
+        stagger: 0.5,
         ease: "none",
 
         scrollTrigger: {
             trigger: ".reveal-text",
             start: "top 100%",
-            end: "bottom 60%",
+            end: "bottom 40%",
             scrub: 2
         }
     });
