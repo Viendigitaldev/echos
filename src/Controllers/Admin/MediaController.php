@@ -54,7 +54,7 @@ final class MediaController extends AdminController
             redirect('/admin/media');
         }
 
-        $absolute = dirname(__DIR__, 3) . '/storage/' . ltrim($item['path'], '/');
+        $absolute = dirname(__DIR__, 3) . '/public/' . ltrim($item['path'], '/');
         if (is_file($absolute)) {
             unlink($absolute);
         }
