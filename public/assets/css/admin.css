@@ -180,6 +180,18 @@ body.admin-body {
   box-shadow: var(--shadow-raised);
 }
 
+/* Groups a handful of shorter admin-cards side by side instead of stacked,
+   to cut down scroll on pages with several short/medium sections. Wraps
+   to fewer columns automatically as space runs out. */
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 22px;
+  align-items: start;
+  margin-bottom: 22px;
+}
+.card-row > .admin-card { margin-bottom: 0; }
+
 .admin-actions { margin-bottom: 20px; display: flex; gap: 10px; }
 
 /* --------------------------------------------------------------- Buttons */

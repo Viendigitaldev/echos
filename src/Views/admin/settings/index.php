@@ -4,70 +4,74 @@
 <form action="<?= e(url('/admin/settings')) ?>" method="post" enctype="multipart/form-data">
     <?= csrf_field() ?>
 
-    <div class="admin-card max-w-640">
-        <h3 class="mt-0">Site Identity</h3>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="site_name">Site name</label>
-                <input type="text" id="site_name" name="site_name" value="<?= e($values['site_name']) ?>">
+    <div class="card-row">
+        <div class="admin-card">
+            <h3 class="mt-0">Site Identity</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="site_name">Site name</label>
+                    <input type="text" id="site_name" name="site_name" value="<?= e($values['site_name']) ?>">
+                </div>
+                <div class="form-group">
+                    <label for="site_tagline">Site tagline</label>
+                    <input type="text" id="site_tagline" name="site_tagline" value="<?= e($values['site_tagline']) ?>">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="site_tagline">Site tagline</label>
-                <input type="text" id="site_tagline" name="site_tagline" value="<?= e($values['site_tagline']) ?>">
-            </div>
+            <?php
+            $fileFieldName = 'site_logo';
+            $altFieldName = 'site_logo_alt_text';
+            $existingFieldName = 'site_logo_existing_media_id';
+            $currentPath = $values['site_logo'] !== '' ? $values['site_logo'] : null;
+            $required = false;
+            $label = 'Site logo';
+            require __DIR__ . '/../partials/media-field.php';
+            ?>
         </div>
-        <?php
-        $fileFieldName = 'site_logo';
-        $altFieldName = 'site_logo_alt_text';
-        $existingFieldName = 'site_logo_existing_media_id';
-        $currentPath = $values['site_logo'] !== '' ? $values['site_logo'] : null;
-        $required = false;
-        $label = 'Site logo';
-        require __DIR__ . '/../partials/media-field.php';
-        ?>
-    </div>
 
-    <div class="admin-card max-w-640">
-        <h3 class="mt-0">Content Visibility</h3>
-        <div class="form-group checkbox-group">
-            <label><input type="checkbox" name="blog_enabled" value="1" <?= $values['blog_enabled'] ? 'checked' : '' ?>> Show Perspectives (Blog) on the site</label>
-            <div class="hint">Unchecked hides the Perspectives nav links, the homepage teaser, and the /perspectives pages (they 404) — nothing is deleted, so re-enable anytime.</div>
-        </div>
-    </div>
-
-    <div class="admin-card max-w-640">
-        <h3 class="mt-0">Contact Info</h3>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="contact_phone">Contact phone</label>
-                <input type="text" id="contact_phone" name="contact_phone" value="<?= e($values['contact_phone']) ?>">
+        <div class="admin-card">
+            <h3 class="mt-0">Content Visibility</h3>
+            <div class="form-group checkbox-group">
+                <label><input type="checkbox" name="blog_enabled" value="1" <?= $values['blog_enabled'] ? 'checked' : '' ?>> Show Perspectives (Blog) on the site</label>
+                <div class="hint">Unchecked hides the Perspectives nav links, the homepage teaser, and the /perspectives pages (they 404) — nothing is deleted, so re-enable anytime.</div>
             </div>
-            <div class="form-group">
-                <label for="contact_address">Contact address</label>
-                <input type="text" id="contact_address" name="contact_address" value="<?= e($values['contact_address']) ?>">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="contact_notify_email">Contact form notification email</label>
-            <input type="email" id="contact_notify_email" name="contact_notify_email" value="<?= e($values['contact_notify_email']) ?>">
-            <div class="hint">Leave empty to disable email notifications for new contact submissions.</div>
         </div>
     </div>
 
-    <div class="admin-card max-w-640">
-        <h3 class="mt-0">Footer &amp; Social</h3>
-        <div class="form-group">
-            <label for="footer_copyright">Footer copyright (HTML allowed)</label>
-            <textarea id="footer_copyright" name="footer_copyright"><?= e($values['footer_copyright']) ?></textarea>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label for="social_x_url">X (Twitter) URL</label>
-                <input type="text" id="social_x_url" name="social_x_url" value="<?= e($values['social_x_url']) ?>">
+    <div class="card-row">
+        <div class="admin-card">
+            <h3 class="mt-0">Contact Info</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="contact_phone">Contact phone</label>
+                    <input type="text" id="contact_phone" name="contact_phone" value="<?= e($values['contact_phone']) ?>">
+                </div>
+                <div class="form-group">
+                    <label for="contact_address">Contact address</label>
+                    <input type="text" id="contact_address" name="contact_address" value="<?= e($values['contact_address']) ?>">
+                </div>
             </div>
             <div class="form-group">
-                <label for="social_linkedin_url">LinkedIn URL</label>
-                <input type="text" id="social_linkedin_url" name="social_linkedin_url" value="<?= e($values['social_linkedin_url']) ?>">
+                <label for="contact_notify_email">Contact form notification email</label>
+                <input type="email" id="contact_notify_email" name="contact_notify_email" value="<?= e($values['contact_notify_email']) ?>">
+                <div class="hint">Leave empty to disable email notifications for new contact submissions.</div>
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <h3 class="mt-0">Footer &amp; Social</h3>
+            <div class="form-group">
+                <label for="footer_copyright">Footer copyright (HTML allowed)</label>
+                <textarea id="footer_copyright" name="footer_copyright"><?= e($values['footer_copyright']) ?></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="social_x_url">X (Twitter) URL</label>
+                    <input type="text" id="social_x_url" name="social_x_url" value="<?= e($values['social_x_url']) ?>">
+                </div>
+                <div class="form-group">
+                    <label for="social_linkedin_url">LinkedIn URL</label>
+                    <input type="text" id="social_linkedin_url" name="social_linkedin_url" value="<?= e($values['social_linkedin_url']) ?>">
+                </div>
             </div>
         </div>
     </div>
