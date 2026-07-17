@@ -32,7 +32,9 @@ $logoAlt = $customLogo !== '' ? Media::altTextFor($customLogo, Setting::get('sit
 <div class="admin-shell">
     <aside class="admin-sidebar">
         <div class="brand">
-            <img src="<?= e($logoUrl) ?>" class="brand-logo-img" alt="<?= e($logoAlt) ?>">
+            <a href="<?= e(url('/')) ?>" target="_blank" rel="noopener noreferrer">
+                <img src="<?= e($logoUrl) ?>" class="brand-logo-img" alt="<?= e($logoAlt) ?>">
+            </a>
         </div>
         <nav>
             <a href="<?= e(url('/admin')) ?>" class="<?= $path === url('/admin') ? 'active' : '' ?>"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>

@@ -226,6 +226,8 @@ table.admin-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 }
 .admin-table th { color: var(--admin-muted); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
 .admin-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+.admin-table td > a:not(.btn) { color: var(--admin-text); text-decoration: none; }
+.admin-table td > a:not(.btn):hover { color: var(--admin-accent); text-decoration: underline; }
 .admin-table .row-actions { white-space: nowrap; }
 .admin-table .row-actions > a,
 .admin-table .row-actions > form { display: inline-block; vertical-align: middle; margin: 0; }

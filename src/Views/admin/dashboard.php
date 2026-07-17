@@ -1,5 +1,8 @@
 <?php
-/** @var array<string, int> $counts */
+/**
+ * @var array<string, int> $counts
+ * @var array<int, array<string, mixed>> $recentSubmissions
+ */
 ?>
 <div class="stat-grid">
     <a class="stat-card" href="<?= e(url('/admin/applications')) ?>">
@@ -40,4 +43,26 @@
         <a href="<?= e(url('/admin/blog')) ?>"><i class="fa-solid fa-newspaper"></i> Manage blog posts</a>
         <a href="<?= e(url('/admin/seo')) ?>"><i class="fa-solid fa-chart-line"></i> SEO tools</a>
     </div>
+</div>
+
+<div class="admin-card">
+    <h3 class="mt-0">Recent contact submissions</h3>
+    <?php if ($recentSubmissions === []): ?>
+    <p class="muted">No submissions yet.</p>
+    <?php else: ?>
+    <table class="admin-table">
+        <thead><tr><th></th><th>Name</th><th>Reason</th><th>Received</th></tr></thead>
+        <tbody>
+        <?php foreach ($recentSubmissions as $item): ?>
+        <tr>
+            <td><?php if (!$item['is_read']): ?><span class="badge badge-unread">New</span><?php endif; ?></td>
+            <td><a href="<?= e(url('/admin/contact-submissions/' . $item['id'])) ?>"><?= e($item['name']) ?></a></td>
+            <td><?= e($item['reason'] ?: '—') ?></td>
+            <td><?= e(date('d M Y H:i', strtotime((string) $item['created_at']))) ?></td>
+        </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <a href="<?= e(url('/admin/contact-submissions')) ?>" class="btn btn-sm mt-8">View all submissions</a>
+    <?php endif; ?>
 </div>
