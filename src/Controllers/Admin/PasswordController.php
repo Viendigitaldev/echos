@@ -39,4 +39,32 @@ final class PasswordController extends AdminController
         $this->flash('success', 'Password updated.');
         redirect('/admin');
     }
+
+    public function updateEmail(Request $request): void
+    {
+        $this->requireCsrf($request);
+
+        $currentPassword = (string) $request->input('current_password', '');
+        if (!password_verify($currentPassword, $this->currentUser['password_hash'])) {
+            $this->flash('error', 'Current password is incorrect.');
+            redirect('/admin/password');
+        }
+
+        $email = $request->trimmedInput('email');
+        if ($email === '' || !str_contains($email, '@')) {
+            $this->flash('error', 'Enter a valid email address.');
+            redirect('/admin/password');
+        }
+
+        $existing = AdminUser::findByEmail($email);
+        if ($existing !== null && (int) $existing['id'] !== (int) $this->currentUser['id']) {
+            $this->flash('error', 'That email is already in use.');
+            redirect('/admin/password');
+        }
+
+        AdminUser::update((int) $this->currentUser['id'], ['email' => $email]);
+
+        $this->flash('success', 'Email updated.');
+        redirect('/admin/password');
+    }
 }

@@ -1,5 +1,8 @@
 <?php
-/** @var array{type: string, message: string}|null $flash */
+/**
+ * @var string $token
+ * @var array{type: string, message: string}|null $flash
+ */
 
 use App\Models\Media;
 use App\Models\Setting;
@@ -13,7 +16,7 @@ $logoAlt = $customLogo !== '' ? Media::altTextFor($customLogo, Setting::get('sit
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Login — Echos</title>
+    <title>Reset Password — Echos Admin</title>
     <link rel="shortcut icon" href="<?= e(asset('img/logo/favicon.png')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/all.min.css')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/admin.css')) ?>">
@@ -21,26 +24,26 @@ $logoAlt = $customLogo !== '' ? Media::altTextFor($customLogo, Setting::get('sit
 <body class="login-wrap">
     <div class="login-card">
         <img src="<?= e($logoUrl) ?>" class="login-logo-img" alt="<?= e($logoAlt) ?>">
-        <p class="login-subtitle">Sign in to manage your site</p>
+        <p class="login-subtitle">Set a new password</p>
 
         <?php if ($flash !== null): ?>
         <div class="admin-flash admin-flash-<?= e($flash['type']) ?>"><?= e($flash['message']) ?></div>
         <?php endif; ?>
 
-        <form action="<?= e(url('/admin/login')) ?>" method="post">
+        <form action="<?= e(url('/admin/reset-password')) ?>" method="post">
             <?= csrf_field() ?>
+            <input type="hidden" name="token" value="<?= e($token) ?>">
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required autofocus>
+                <label for="password">New password</label>
+                <input type="password" id="password" name="password" minlength="10" required autofocus>
+                <div class="hint">At least 10 characters.</div>
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <label for="password_confirmation">Confirm new password</label>
+                <input type="password" id="password_confirmation" name="password_confirmation" minlength="10" required>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Log In</button>
+            <button type="submit" class="btn btn-primary w-100">Update Password</button>
         </form>
-
-        <p class="login-subtitle"><a href="<?= e(url('/admin/forgot-password')) ?>">Forgot password?</a></p>
     </div>
 </body>
 </html>

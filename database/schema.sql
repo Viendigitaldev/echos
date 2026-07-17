@@ -16,6 +16,8 @@ CREATE TABLE admin_users (
     email VARCHAR(190) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     must_change_password TINYINT(1) NOT NULL DEFAULT 1,
+    password_reset_token_hash VARCHAR(64) NULL,
+    password_reset_expires_at DATETIME NULL,
     last_login_at DATETIME NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY uq_admin_users_email (email)
