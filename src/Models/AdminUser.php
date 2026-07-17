@@ -14,6 +14,12 @@ final class AdminUser extends Model
         return static::findWhere(['email' => $email]);
     }
 
+    /** @return array<string, mixed>|null */
+    public static function findByUsername(string $username): ?array
+    {
+        return static::findWhere(['username' => $username]);
+    }
+
     public static function touchLogin(int $id): void
     {
         static::update($id, ['last_login_at' => date('Y-m-d H:i:s')]);

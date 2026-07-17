@@ -30,11 +30,11 @@ final class AuthController
             redirect('/admin/login');
         }
 
-        $email = $request->trimmedInput('email');
+        $username = $request->trimmedInput('username');
         $password = (string) $request->input('password', '');
 
-        if (!AuthService::attempt($email, $password)) {
-            $_SESSION['admin_flash'] = ['type' => 'error', 'message' => 'Invalid email or password.'];
+        if (!AuthService::attempt($username, $password)) {
+            $_SESSION['admin_flash'] = ['type' => 'error', 'message' => 'Invalid username or password.'];
             redirect('/admin/login');
         }
 

@@ -30,8 +30,8 @@ $logoAlt = $customLogo !== '' ? Media::altTextFor($customLogo, Setting::get('sit
         <form action="<?= e(url('/admin/login')) ?>" method="post">
             <?= csrf_field() ?>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required autofocus>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required autofocus>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>

@@ -40,6 +40,38 @@ final class PasswordController extends AdminController
         redirect('/admin');
     }
 
+    public function updateUsername(Request $request): void
+    {
+        $this->requireCsrf($request);
+
+        $currentPassword = (string) $request->input('current_password', '');
+        if (!password_verify($currentPassword, $this->currentUser['password_hash'])) {
+            $this->flash('error', 'Current password is incorrect.');
+            redirect('/admin/password');
+        }
+
+        $username = $request->trimmedInput('username');
+        if ($username === '') {
+            $this->flash('error', 'Enter a username.');
+            redirect('/admin/password');
+        }
+
+        $existing = AdminUser::findByUsername($username);
+        if ($existing !== null && (int) $existing['id'] !== (int) $this->currentUser['id']) {
+            $this->flash('error', 'That username is already in use.');
+            redirect('/admin/password');
+        }
+
+        AdminUser::update((int) $this->currentUser['id'], ['username' => $username]);
+
+        $this->flash('success', 'Username updated.');
+        redirect('/admin/password');
+    }
+
+    /**
+     * The recovery email used for forgot-password links — separate from
+     * the username used to log in.
+     */
     public function updateEmail(Request $request): void
     {
         $this->requireCsrf($request);
@@ -64,7 +96,7 @@ final class PasswordController extends AdminController
 
         AdminUser::update((int) $this->currentUser['id'], ['email' => $email]);
 
-        $this->flash('success', 'Email updated.');
+        $this->flash('success', 'Recovery email updated.');
         redirect('/admin/password');
     }
 }

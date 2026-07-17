@@ -1,6 +1,25 @@
 <?php $pageTitle = 'Account'; ?>
 <div class="admin-card max-w-480">
-    <h3 class="mt-0">Login email</h3>
+    <h3 class="mt-0">Username</h3>
+    <p class="muted">Used to log in — this is not an email address.</p>
+    <form action="<?= e(url('/admin/account/username')) ?>" method="post">
+        <?= csrf_field() ?>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" value="<?= e($currentUser['username']) ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="current_password_username">Current password</label>
+            <input type="password" id="current_password_username" name="current_password" required>
+            <div class="hint">Required to confirm it's really you before changing the username.</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Username</button>
+    </form>
+</div>
+
+<div class="admin-card max-w-480">
+    <h3 class="mt-0">Recovery email</h3>
+    <p class="muted">Where a password reset link is sent if you use "Forgot password?" — not used to log in.</p>
     <form action="<?= e(url('/admin/account/email')) ?>" method="post">
         <?= csrf_field() ?>
         <div class="form-group">
@@ -8,9 +27,9 @@
             <input type="email" id="email" name="email" value="<?= e($currentUser['email']) ?>" required>
         </div>
         <div class="form-group">
-            <label for="current_password">Current password</label>
-            <input type="password" id="current_password" name="current_password" required>
-            <div class="hint">Required to confirm it's really you before changing the login email.</div>
+            <label for="current_password_email">Current password</label>
+            <input type="password" id="current_password_email" name="current_password" required>
+            <div class="hint">Required to confirm it's really you before changing the recovery email.</div>
         </div>
         <button type="submit" class="btn btn-primary">Update Email</button>
     </form>

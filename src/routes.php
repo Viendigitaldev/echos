@@ -47,6 +47,7 @@ $router->post('/admin/login', [AdminAuthController::class, 'login']);
 $router->post('/admin/logout', [AdminAuthController::class, 'logout']);
 $router->get('/admin/password', [PasswordController::class, 'show']);
 $router->post('/admin/password', [PasswordController::class, 'update']);
+$router->post('/admin/account/username', [PasswordController::class, 'updateUsername']);
 $router->post('/admin/account/email', [PasswordController::class, 'updateEmail']);
 $router->get('/admin/forgot-password', [ForgotPasswordController::class, 'showForgotForm']);
 $router->post('/admin/forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
