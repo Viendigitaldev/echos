@@ -10,6 +10,7 @@ use App\Controllers\Admin\BlogAdminController;
 use App\Controllers\Admin\BlogCategoryController;
 use App\Controllers\Admin\ContactSubmissionController;
 use App\Controllers\Admin\DashboardController;
+use App\Controllers\Admin\ForgotPasswordController;
 use App\Controllers\Admin\IndustryController;
 use App\Controllers\Admin\MediaController;
 use App\Controllers\Admin\MenuController;
@@ -46,6 +47,12 @@ $router->post('/admin/login', [AdminAuthController::class, 'login']);
 $router->post('/admin/logout', [AdminAuthController::class, 'logout']);
 $router->get('/admin/password', [PasswordController::class, 'show']);
 $router->post('/admin/password', [PasswordController::class, 'update']);
+$router->post('/admin/account/username', [PasswordController::class, 'updateUsername']);
+$router->post('/admin/account/email', [PasswordController::class, 'updateEmail']);
+$router->get('/admin/forgot-password', [ForgotPasswordController::class, 'showForgotForm']);
+$router->post('/admin/forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
+$router->get('/admin/reset-password', [ForgotPasswordController::class, 'showResetForm']);
+$router->post('/admin/reset-password', [ForgotPasswordController::class, 'resetPassword']);
 
 // -------------------------------------------------------------------- dashboard
 $router->get('/admin', [DashboardController::class, 'index']);

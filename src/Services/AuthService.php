@@ -10,9 +10,9 @@ final class AuthService
 {
     private const SESSION_KEY = 'admin_user_id';
 
-    public static function attempt(string $email, string $password): bool
+    public static function attempt(string $username, string $password): bool
     {
-        $user = AdminUser::findByEmail($email);
+        $user = AdminUser::findByUsername($username);
 
         if ($user === null || !password_verify($password, $user['password_hash'])) {
             return false;

@@ -180,6 +180,18 @@ body.admin-body {
   box-shadow: var(--shadow-raised);
 }
 
+/* Groups a handful of shorter admin-cards side by side instead of stacked,
+   to cut down scroll on pages with several short/medium sections. Wraps
+   to fewer columns automatically as space runs out. */
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 22px;
+  align-items: start;
+  margin-bottom: 22px;
+}
+.card-row > .admin-card { margin-bottom: 0; }
+
 .admin-actions { margin-bottom: 20px; display: flex; gap: 10px; }
 
 /* --------------------------------------------------------------- Buttons */
@@ -226,6 +238,8 @@ table.admin-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 }
 .admin-table th { color: var(--admin-muted); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
 .admin-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+.admin-table td > a:not(.btn) { color: var(--admin-text); text-decoration: none; }
+.admin-table td > a:not(.btn):hover { color: var(--admin-accent); text-decoration: underline; }
 .admin-table .row-actions { white-space: nowrap; }
 .admin-table .row-actions > a,
 .admin-table .row-actions > form { display: inline-block; vertical-align: middle; margin: 0; }
@@ -404,6 +418,13 @@ textarea.tall { min-height: 260px; }
   display: flex;
   align-items: center;
   gap: 16px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.stat-card:hover {
+  border-color: var(--admin-accent-strong);
+  transform: translateY(-2px);
 }
 .stat-card .stat-icon {
   width: 46px;

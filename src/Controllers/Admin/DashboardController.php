@@ -21,6 +21,7 @@ final class DashboardController extends AdminController
                 'unreadSubmissions' => ContactSubmission::unreadCount(),
                 'totalSubmissions' => ContactSubmission::count(),
             ],
+            'recentSubmissions' => array_slice(ContactSubmission::recent(), 0, 5),
         ]);
     }
 }

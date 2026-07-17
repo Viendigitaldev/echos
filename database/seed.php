@@ -352,10 +352,11 @@ BODY;
     $email = 'abhishek@ezrankings.com';
     $temporaryPassword = bin2hex(random_bytes(6));
     $admin = $pdo->prepare(
-        'INSERT INTO admin_users (name, email, password_hash, must_change_password) VALUES (:name, :email, :password_hash, 1)'
+        'INSERT INTO admin_users (name, username, email, password_hash, must_change_password) VALUES (:name, :username, :email, :password_hash, 1)'
     );
     $admin->execute([
         'name' => 'Admin',
+        'username' => 'admin',
         'email' => $email,
         'password_hash' => password_hash($temporaryPassword, PASSWORD_DEFAULT),
     ]);

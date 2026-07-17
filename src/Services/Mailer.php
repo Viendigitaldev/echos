@@ -27,6 +27,7 @@ final class Mailer
         $mail = new PHPMailer(true);
 
         try {
+            $mail->CharSet = 'UTF-8';
             $mail->isSMTP();
             $mail->Host = $host;
             $mail->Port = (int) Setting::get('mail_port', '587');
