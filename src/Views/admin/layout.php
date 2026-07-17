@@ -7,6 +7,7 @@
 
 use App\Models\Media;
 use App\Models\Setting;
+use App\Support\Url;
 
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?? '';
 $isActive = static fn (string $prefix): string => str_contains($path, $prefix) ? ' active' : '';
@@ -32,7 +33,7 @@ $logoAlt = $customLogo !== '' ? Media::altTextFor($customLogo, Setting::get('sit
 <div class="admin-shell">
     <aside class="admin-sidebar">
         <div class="brand">
-            <a href="<?= e(url('/')) ?>" target="_blank" rel="noopener noreferrer">
+            <a class="brand-link" href="<?= e(Url::absolute('/')) ?>" target="_blank" rel="noopener noreferrer">
                 <img src="<?= e($logoUrl) ?>" class="brand-logo-img" alt="<?= e($logoAlt) ?>">
             </a>
         </div>
