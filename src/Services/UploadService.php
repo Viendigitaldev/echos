@@ -50,7 +50,10 @@ final class UploadService
 
         $extension = self::ALLOWED_MIME[$mime];
         $relativeDir = 'uploads/' . date('Y') . '/' . date('m');
-        $absoluteDir = dirname(__DIR__, 2) . '/storage/' . $relativeDir;
+        // Written under public/ (not storage/) and committed to git so the
+        // files survive Hostinger's deploy, which re-clones the repo from
+        // scratch every push and wipes anything not tracked in git.
+        $absoluteDir = dirname(__DIR__, 2) . '/public/' . $relativeDir;
 
         if (!is_dir($absoluteDir) && !mkdir($absoluteDir, 0755, true) && !is_dir($absoluteDir)) {
             throw new \RuntimeException('Could not create upload directory.');
